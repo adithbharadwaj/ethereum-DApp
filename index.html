@@ -9,15 +9,125 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </head>
+
 <body style="background: grey">
 
-	<h1 style="text-align: center;">Student Details</h1>
+	<h1 style="text-align: center;">Details Form</h1>
 
+	<p style="padding-bottom: 50px;"></p>
+
+	<form id="contact-form" method="post" onsubmit="return recieve();" role="form">
+
+    <div class="messages"></div>
+
+    <div class="col-lg-12" >
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_name">Name *</label>
+                    <input id="name" type="text" name="name" class="form-control" placeholder="Please enter your name *" required="required" data-error="Firstname is required.">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_lastname">Teacher *</label>
+                    <input id="teacher" type="text" name="teacher" class="form-control" required="required" data-error="Lastname is required.">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_email">Parent *</label>
+                    <input id="parent" type="text" name="parent" class="form-control" required="required" data-error="Valid email is required.">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_phone">Parent Address *</label>
+                    <input id="parent_address" type="text" name="parent_address" class="form-control">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_name">Course *</label>
+                    <input id="course" type="text" name="course" class="form-control" required="required" data-error="Firstname is required.">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_lastname">Marks *</label>
+                    <input id="marks" type="text" name="marks" class="form-control" required="required" data-error="Lastname is required.">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_email">Attendance *</label>
+                    <input id="attendance" type="text" name="attendance" class="form-control" required="required" data-error="Valid email is required.">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_phone">Profeciency *</label>
+                    <input id="profeciency" type="text" name="profeciency" class="form-control">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+        </div>
+
+        <p style="padding-top: 20px;"></p>
+
+        <div class="row">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-success" id="submit">submit</button>
+            </div>
+        </div>
+
+        <p style="padding-bottom: 100px;"></p>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js">
+        	
+        	function recieve(){
+
+        		var name = document.getElementById('name').value;
+        		var teacher = document.getElementById('teacher').value;
+        		var parent = document.getElementById('parent').value;
+        		var parent_address = document.getElementById('parent_address').value;
+        		var course = document.getElementById('course').value;
+        		var marks = document.getElementById('marks').value;
+        		var attendance = document.getElementById('attendance').value;
+        		var profeciency = document.getElementById('profeciency').value;
+
+
+
+        	}
+
+
+
+        </script>
+
+        
+    </div>
+
+</form>
+
+<div class="container">
 		
-	<h1 style="padding-left: 20px;">Student list</h1>
+	<h3 style="padding-left: 30px;">Student list</h3>
 
 
-	<div class = "col-lg-2">		
+	<div class = "row">	
+	<div class="col-lg-2">
 
 		<p style="padding-top: 30px;"> </p>
 
@@ -38,8 +148,74 @@
 		</ul>
 
 		<a href="form.html" class="btn btn-success"> Add Student</a>
-
+	
 	</div>
+	</div>
+</div>
+
+	<p style="padding-top: 50px;"> </p>
+		
+		<div class="container">
+ 		 
+ 		 <h2 style="text-align: center;">Details</h2>
+
+ 		 <p style="padding-top: 50px;"></p>
+
+		 <div class="panel-group">
+		    
+		    <div class="panel panel-primary">
+		      <div class="panel-heading">Name</div>
+		      <div class = "panel-body"><span id = "name"></span></div>
+		    </div>
+		    
+		    <div class="panel panel-primary">
+		      <div class="panel-heading">Teacher</div>
+		      <div class="panel-body">Panel Content</div>
+		    </div>
+		    
+		    <div class="panel panel-primary">
+		      <div class="panel-heading">Parent</div>
+		      <div class="panel-body">Panel Content</div>
+		    </div>
+		    
+		    <div class="panel panel-primary">
+		      <div class="panel-heading">Course</div>
+		      <div class="panel-body">Panel Content</div>
+		    </div>
+		    
+		    <div class="panel panel-primary">
+		      <div class="panel-heading">Marks</div>
+		      <div class="panel-body">Panel Content</div>
+		    </div>
+		   
+		    <div class="panel panel-primary">
+		      <div class="panel-heading">Attendance</div>
+		      <div class="panel-body">Panel Content</div>
+		    </div>
+
+		    <div class="panel panel-primary">
+		      <div class="panel-heading">Profeciency</div>
+		      <div class="panel-body">Panel Content</div>
+		    </div>
+
+ 		 	<p style="padding-top: 50px;"></p>
+
+		    <div class="panel panel-default">
+				<button type="button" class="btn btn-success" onclick="employ()" id = "emp">Employ</button>
+		    </div>
+
+		    <script type="text/javascript">
+		    	
+		    	function employ(){
+		    		alert('employed');
+		    		var names = ["adith", "keerthi", "parinith"];
+		    		document.getElementById('name').innerHTML = names[0];
+		    	}
+
+		    </script>
+
+		  </div>
+		</div>
 
 
 
