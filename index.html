@@ -113,15 +113,9 @@
 
 		<div id="list_items">
 
-			<ul class="list-group" id="student_list">	
-			
-				<li></li>
-
-			</ul>
-
 		</div>
 
-		<button class="btn btn-success" onclick="add_student()" id="add"> Add Student </button>
+		<button class="btn btn-success" id="add" onclick="add_student()"> Add Student </button>
 		
 	
 	</div>
@@ -179,7 +173,10 @@
 
 		  	<button type="button" class="btn btn-primary" onclick="display()" id = "disp">display</button> 
 
-		    
+
+
+
+
 
 
 
@@ -227,8 +224,10 @@
 
 			    function add_student() {
 
-					alert('hello');
-					
+
+					var out = '<ul><li>Item One</li></ul>';
+					$('#list_items').append(out);
+										
 				}
 			    	
 			   	function employ(){
