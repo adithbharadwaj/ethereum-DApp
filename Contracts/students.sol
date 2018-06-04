@@ -1,11 +1,49 @@
 pragma solidity ^0.4.0;
 
-contract Students {
+contract Ownable {
+    address public owner;
+
+    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
+
+  /**
+   * @dev The Ownable constructor sets the original `owner` of the contract to the sender
+   * account.
+   */
+    constructor() public {
+        owner = msg.sender;
+    }
+
+
+  /**
+   * @dev Throws if called by any account other than the owner.
+   */
+    modifier onlyOwner() {
+        require(msg.sender == owner);
+        _;
+    }
+
+
+  /**
+   * @dev Allows the current owner to transfer control of the contract to a newOwner.
+   * @param newOwner The address to transfer ownership to.
+   */
+    function transferOwnership(address newOwner) public onlyOwner {
+        require(newOwner != address(0));
+        emit OwnershipTransferred(owner, newOwner);
+        owner = newOwner;
+    }
+
+}
+
+contract Students is Ownable{
     
-    // Structs
+    // Structs and definitions
+    uint fee = 0.01 ether;
     struct student {
         uint attendance;
         uint marks;
+        uint HWcount;
+        address studentAddr;
         address teacher;
         address parent;
         string name;
@@ -15,19 +53,21 @@ contract Students {
     }
     
     // Mappings
-    mapping (address => uint) permission; //Teach:0 Parent:1 Emp:2
+    mapping (address => uint) permission; // Student:0 Parent:1 Emp:2 Teacher:3 Owner:4
     mapping (address => string) peepNames;
     
     // Events
-    event NewStudent(string studentName, uint studentId, string teacherName);
-    event NewEmp(string empName, address empAddress);
-    event NewTeacher(string teacherName, address teacherAddress);
-    event MarksUpdated(string studentName, uint studentId, uint from, uint to);
-    event AttendanceUpdated(string studentName, uint studentId, uint from, uint to);
-    event CourseUpdated(string studentName, uint studentId, string from, string to);
-    event ProfUpdated(string studentName, uint studentId, string from, string to);
-    event StudentEmployed(string studentName, uint studentId, string empName, address empAddress);
-    event YesParent(string studentName, uint studentId, string parentName, address parentAddress);
+    event NewStudent(string indexed studentName, uint indexed studentId, address indexed studentAddress, string teacherName);
+    event NewEmp(string indexed empName, address indexed empAddress);
+    event NewTeacher(string indexed teacherName, address indexed teacherAddress);
+    event MarksUpdated(string indexed studentName, uint studentId, uint indexed from, uint indexed to);
+    event AttendanceUpdated(string indexed studentName, uint studentId, uint indexed from, uint indexed to);
+    event CourseUpdated(string indexed studentName, uint studentId, string indexed from, string indexed to);
+    event ProfUpdated(string indexed studentName, uint studentId, string indexed from, string indexed to);
+    event NewHW(string indexed studentName, uint indexed studentId, uint presentHWCount);
+    event HWDone(string indexed studentName, uint indexed studentId, address indexed studentAddress);
+    event StudentEmployed(string indexed studentName, uint studentId, string indexed empName, address indexed empAddress);
+    event YesParent(string indexed studentName, uint studentId, string indexed parentName, address indexed parentAddress);
     
     // Modifiers
     modifier onlyTeacher(uint studentId) {
@@ -41,12 +81,18 @@ contract Students {
     }
     
     modifier ifTeacher(address addr) {
-         require(permission[addr]==0);
+         require(permission[addr]==3);
          _;
      }
      
     modifier ifEmp(address addr) {
         require(permission[addr]==2);
+        _;
+    }
+    
+    modifier ifLegitStudent(uint studentId) {
+        require(permission[msg.sender]==0);
+        require(msg.sender==students[studentId].studentAddr);
         _;
     }
     
@@ -57,59 +103,83 @@ contract Students {
     // Functions
     function createStudent( uint _attendance,
                             uint _marks,
-                            address parentAddress,
-                            string parentName,
-                            string studentName,
+                            address _studentAddress,
+                            address _parentAddress,
+                            string _parentName,
+                            string _studentName,
                             string _course,
-                            string _prof) public ifTeacher(msg.sender) {
+                            string _prof) public payable ifTeacher(msg.sender) {
                                 
-        peepNames[parentAddress] = parentName;
-        permission[parentAddress] = 1;
+        require(msg.value>=fee);
+        msg.sender.transfer(msg.value-fee);
+        
+                                
+        peepNames[_parentAddress] = _parentName;
+        permission[_parentAddress] = 1;
+        permission[_studentAddress] = 0;
         
         uint studentId = students.push(student( _attendance,
                                                 _marks,
+                                                0,
+                                                _studentAddress,
                                                 msg.sender,
-                                                parentAddress,
-                                                studentName,
+                                                _parentAddress,
+                                                _studentName,
                                                 _course,
                                                 "none",
                                                 _prof)) - 1;
-        emit NewStudent(studentName, studentId, peepNames[msg.sender]);
-    }
-
-    function createTeacher(string newTeacherName, address newTeacherAddress) public ifTeacher(msg.sender) {
-        emit NewTeacher(newTeacherName, newTeacherAddress);
-        permission[newTeacherAddress] = 0;
-        peepNames[newTeacherAddress] = newTeacherName;
+        emit NewStudent(_studentName, studentId, _studentAddress, peepNames[msg.sender]);
     }
     
-    function createEmp(string newEmpName, address newEmpAddress) public ifTeacher(msg.sender) {
+    // Only Teacher can create new Emp
+    function createEmp(string newEmpName, address newEmpAddress) public payable ifTeacher(msg.sender) {
+        require(msg.value>=fee);
+        msg.sender.transfer(msg.value-fee);
         emit NewEmp(newEmpName, newEmpAddress);
         permission[newEmpAddress]=2;
         peepNames[newEmpAddress]=newEmpName;
     }
     
-    function updateMarks(uint studentId, uint newMarks) public onlyTeacher(studentId) {
+    // Only the student's teacher can edit info and give homework
+    function updateMarks(uint studentId, uint newMarks) public payable onlyTeacher(studentId) {
+        require(msg.value>=fee);
+        msg.sender.transfer(msg.value-fee);
+        
         student memory s = students[studentId];
         emit MarksUpdated(s.name, studentId, s.marks, newMarks);
         s.marks = newMarks;
     }
     
-    function updateAttendance(uint studentId, uint newAttendance) public onlyTeacher(studentId) {
+    function updateAttendance(uint studentId, uint newAttendance) public payable onlyTeacher(studentId) {
+        require(msg.value>=fee);
+        msg.sender.transfer(msg.value-fee);
+        
         emit AttendanceUpdated(students[studentId].name, studentId, students[studentId].attendance, newAttendance);
         students[studentId].attendance = newAttendance;
     }
     
-    function updateCourse(uint studentId, string newCourse) public onlyTeacher(studentId) {
+    function updateCourse(uint studentId, string newCourse) public payable onlyTeacher(studentId) {
+        require(msg.value>=fee);
+        msg.sender.transfer(msg.value-fee);
+        
         emit CourseUpdated(students[studentId].name, studentId, students[studentId].course, newCourse);
         students[studentId].course = newCourse;
     }
     
-    function updateProficiency(uint studentId, string newProficiency) public onlyTeacher(studentId) {
+    function updateProficiency(uint studentId, string newProficiency) public payable onlyTeacher(studentId) {
+        require(msg.value>=fee);
+        msg.sender.transfer(msg.value-fee);
+        
         emit ProfUpdated(students[studentId].name, studentId, students[studentId].proficiency, newProficiency);
         students[studentId].proficiency = newProficiency;
     }
     
+    function newHW(uint studentId) public onlyTeacher(studentId) {
+        students[studentId].HWcount++;
+        emit NewHW(students[studentId].name, studentId, students[studentId].HWcount);
+    }
+    
+    // Anyone can view student details
     function getStudent(uint studentId) public view 
     returns(string name,
             address teacher,
@@ -131,13 +201,37 @@ contract Students {
                 s.proficiency);
     }
     
-    function employStudent(uint studentId) public ifEmp(msg.sender) {
+    // Only an employer can employ a student
+    function employStudent(uint studentId) public payable ifEmp(msg.sender) {
+        require(msg.value>=fee);
+        msg.sender.transfer(msg.value-fee);
+        
         students[studentId].employer = peepNames[msg.sender];
         emit StudentEmployed(students[studentId].name, studentId, peepNames[msg.sender], msg.sender);
     }
     
-    function maybeSomething(uint studentId) public view onlyParent(studentId) {
+    // Parent does Maybe Something
+    function maybeSomething(uint studentId) public onlyParent(studentId) {
         emit YesParent(students[studentId].name, studentId, peepNames[msg.sender], msg.sender);
     }
     
+    // Student can able to finish HWcount
+    function finishHW(uint studentId) public ifLegitStudent(studentId) {
+        students[studentId].HWcount=0;
+        emit HWDone(students[studentId].name, studentId, msg.sender);
+    }
+    
+    // Only Owner functions
+    function createTeacher(string newTeacherName, address newTeacherAddress) public payable onlyOwner {
+        require(msg.value>=fee);
+        msg.sender.transfer(msg.value-fee);
+        
+        emit NewTeacher(newTeacherName, newTeacherAddress);
+        permission[newTeacherAddress] = 3;
+        peepNames[newTeacherAddress] = newTeacherName;
+    }
+    
+    function withdraw() public onlyOwner {
+        owner.transfer(address(this).balance);
+    }
 }
