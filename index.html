@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 	<title>student details</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,37 +10,264 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </head>
+
 <body style="background: grey">
 
-	<h1 style="text-align: center;">Student Details</h1>
+	<h1 style="text-align: center;">Details Form</h1>
 
+	<p style="padding-bottom: 50px;"></p>
+
+	<form id="contact-form" method="get" role="form">
+
+    <div class="messages"></div>
+
+    <div class="col-lg-12" >
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_name">Name *</label>
+                    <input id="nam" type="text" name="nam" class="form-control" placeholder="Please enter your name *" required="required" data-error="Firstname is required.">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_lastname">Teacher *</label>
+                    <input id="teacher" type="text" name="teacher" class="form-control" required="required" data-error="Lastname is required.">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_email">Parent *</label>
+                    <input id="parent" type="text" name="parent" class="form-control" required="required" data-error="Valid email is required.">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_phone">Parent Address *</label>
+                    <input id="parent_address" type="text" name="parent_address" class="form-control">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_name">Course *</label>
+                    <input id="course" type="text" name="course" class="form-control" required="required" data-error="Firstname is required.">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_lastname">Marks *</label>
+                    <input id="marks" type="text" name="marks" class="form-control" required="required" data-error="Lastname is required.">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_email">Attendance *</label>
+                    <input id="attendance" type="text" name="attendance" class="form-control" required="required" data-error="Valid email is required.">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_phone">Profeciency *</label>
+                    <input id="profeciency" type="text" name="profeciency" class="form-control">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+        </div>
+
+        <p style="padding-top: 20px;"></p>
+
+        <div class="row">
+            <div class="col-md-12">
+                <input type="submit" class="btn btn-success" id="submit" >
+            </div>
+        </div>
+
+        <p style="padding-bottom: 100px;"></p>
+
+       
+        
+    </div>
+
+</form>
+
+<div class="container">
 		
-	<h1 style="padding-left: 20px;">Student list</h1>
+	<h3 style="padding-left: 30px;">Student list</h3>
 
 
-	<div class = "col-lg-2">		
+	<div class = "row">	
+	<div class="col-lg-2">
 
 		<p style="padding-top: 30px;"> </p>
 
-		<ul class="list-group">
-  			
-  			<li class="list-group-item" style="padding-left: 50px;"><a href="student1.html"> parinith</a></li>
-  			
-  			<li class="list-group-item" style="padding-left: 50px;"><a href="student2.html"> adith</a></li>
+		<div id="list_items">
 
-  			<li class="list-group-item" style="padding-left: 50px;"><a href="student2.html"> keerthi</a></li>
+		</div>
 
-  			<li class="list-group-item" style="padding-left: 50px;"><a href="student1.html"> parinith</a></li>
-  			
-  			<li class="list-group-item" style="padding-left: 50px;"><a href="student2.html"> adith</a></li>
-
-  			<li class="list-group-item" style="padding-left: 50px;"><a href="student2.html"> keerthi</a></li>
-		
-		</ul>
-
-		<a href="form.html" class="btn btn-success"> Add Student</a>
-
+	<!--	<button class="btn btn-success" id="add" onclick="add_student()"> Add Student </button> -->
+ 		
+	
 	</div>
+	</div>
+</div>
+
+	<p style="padding-top: 50px;"> </p>
+		
+		<div class="container">
+ 		 
+ 		 <h2 style="text-align: center;">Details</h2>
+
+ 		 <p style="padding-top: 50px;"></p>
+
+		 <div class="panel-group">
+		    
+		    <div class="panel panel-primary">
+		      <div class="panel-heading">Name</div>
+		      <div class = "panel-body"><span id = "name_span"></span></div>
+		    </div>
+		    
+		    <div class="panel panel-primary">
+		      <div class="panel-heading">Teacher</div>
+		      <div class="panel-body"><span id="teach_span"></span></div>
+		    </div>
+		    
+		    <div class="panel panel-primary">
+		      <div class="panel-heading">Parent</div>
+		      <div class="panel-body"><span id="par_span"></span></div>
+		    </div>
+		    
+		    <div class="panel panel-primary">
+		      <div class="panel-heading">Course</div>
+		      <div class="panel-body"><span id="course_span"></span></div>
+		    </div>
+		    
+		    <div class="panel panel-primary">
+		      <div class="panel-heading">Marks</div>
+		      <div class="panel-body"><span id="mar_span"></span></div>
+		    </div>
+		   
+		    <div class="panel panel-primary">
+		      <div class="panel-heading">Attendance</div>
+		      <div class="panel-body"><span id="att_span"></span></div>
+		    </div>
+
+		    <div class="panel panel-primary">
+		      <div class="panel-heading">Profeciency</div>
+		      <div class="panel-body"><span id="pro_span"></span></div>
+		    </div>
+
+ 		 	<p style="padding-top: 50px;"></p>
+
+			<button type="button" class="btn btn-success" onclick="employ()" id = "emp">Employ</button>
+
+		  	<button type="button" class="btn btn-primary" onclick="display()" id = "disp">display</button> 
+
+
+
+
+
+		    <script type="text/javascript">
+
+	        	var name = "";
+	        	var teacher = "";
+	        	var parent = "";
+	        	var parent_address = "";
+	        	var course = "";
+	        	var marks = "";
+	        	var attendance = "";
+	        	var profeciency = "";
+				var num = 0;
+
+				$('#contact-form').submit(function () {
+
+ 					recieve();
+ 					return false;
+				
+				});	        	
+				
+	        	
+	        	function recieve(){
+
+	        		name = document.getElementById('nam').value;
+	        		teacher = document.getElementById('teacher').value;
+	        		parent = document.getElementById('parent').value;
+	        		parent_address = document.getElementById('parent_address').value;
+	        		course = document.getElementById('course').value;
+	        		marks = document.getElementById('marks').value;
+	        		attendance = document.getElementById('attendance').value;
+	        		profeciency = document.getElementById('profeciency').value;
+
+	        		add_student(name);
+
+	        	}
+				
+				function display() {
+
+					var name = "adith";
+			    		
+			    	document.getElementById('name_span').innerHTML = name;
+			    	document.getElementById('teach_span').innerHTML = teacher;
+			    	document.getElementById('par_span').innerHTML = parent;
+			    	document.getElementById('course_span').innerHTML = course;
+			    	document.getElementById('mar_span').innerHTML = marks;
+			    	document.getElementById('att_span').innerHTML = attendance;
+			    	document.getElementById('pro_span').innerHTML = profeciency;
+
+			    }
+
+			    function add_student(name) {
+
+
+					//var out = '<ol><li>' + name + '</li></ol>';
+					//$('#list_items').append(out);
+
+					var parent = document.getElementById('list_items');
+
+					var listview = document.createElement('ul');
+            		listview.setAttribute('id', 'view');
+
+            		var el = document.createElement('li');
+					el.setAttribute('id', num);
+					el.innerHTML = name;
+
+					el.onclick = function() {get_details(el.id);};
+
+					num = num + 1;
+
+					parent.appendChild(listview);
+					listview.appendChild(el);
+						
+					
+										
+				}
+
+				function get_details(id){
+
+					alert(id);	
+
+				}
+			    	
+			   	function employ(){
+			    	alert('employed');
+			    }
+
+		    	
+		    </script>
+
+		  </div>
+		</div>
 
 
 
