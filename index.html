@@ -90,7 +90,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <button class="btn btn-success" id="submit" onclick="recieve()">submit</button>
+                <input type="submit" class="btn btn-success" id="submit" >
             </div>
         </div>
 
@@ -116,8 +116,8 @@
 
 		</div>
 
-		<button class="btn btn-success" id="add" onclick="add_student()"> Add Student </button>
-		
+	<!--	<button class="btn btn-success" id="add" onclick="add_student()"> Add Student </button> -->
+ 		
 	
 	</div>
 	</div>
@@ -188,7 +188,14 @@
 	        	var marks = "";
 	        	var attendance = "";
 	        	var profeciency = "";
-				var num = 0;	        	
+				var num = 0;
+
+				$('#contact-form').submit(function () {
+
+ 					recieve();
+ 					return false;
+				
+				});	        	
 				
 	        	
 	        	function recieve(){
@@ -202,7 +209,7 @@
 	        		attendance = document.getElementById('attendance').value;
 	        		profeciency = document.getElementById('profeciency').value;
 
-	        		alert(name + teacher + parent + parent_address + course);
+	        		add_student(name);
 
 	        	}
 				
@@ -220,9 +227,7 @@
 
 			    }
 
-			    function add_student() {
-
-			    	var name = ["adith"];
+			    function add_student(name) {
 
 
 					//var out = '<ol><li>' + name + '</li></ol>';
