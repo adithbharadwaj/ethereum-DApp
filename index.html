@@ -164,7 +164,7 @@
 		    </div>
 
 		    <div class="panel panel-primary">
-		      <div class="panel-heading">Profeciency</div>
+		      <div class="panel-heading">Proficiency</div>
 		      <div class="panel-body"><span id="pro_span"></span></div>
 		    </div>
 
@@ -208,54 +208,97 @@
 	        		marks = document.getElementById('marks').value;
 	        		attendance = document.getElementById('attendance').value;
 	        		profeciency = document.getElementById('profeciency').value;
+					  if (typeof web3 !== 'undefined') {
+					            web3 = new Web3(web3.currentProvider);
+					        } else {
+					            // set the provider you want from Web3.providers
+					            web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+					        }
+					        web3.eth.defaultAccount = web3.eth.accounts[0];
+
+					        var CoursetroContract = web3.eth.contract(PASTE ABI HERE!);
+					        var Coursetro = CoursetroContract.at('CONTRACT ADDRESS');
+					        console.log(Coursetro);
+					        $("#submit").click(function() {
+					                Coursetro.createStudent(Number(attendance),
+					                            Number(marks),
+					                            string parent_address,
+					                            string parent,
+					                            string name,
+					                            string course,
+					                            string profeciency)
+					             });
 
 	        		add_student(name);
 
 	        	}
 				
-				function display() {
-
-					var name = "adith";
-			    		
-			    	document.getElementById('name_span').innerHTML = name;
-			    	document.getElementById('teach_span').innerHTML = teacher;
-			    	document.getElementById('par_span').innerHTML = parent;
-			    	document.getElementById('course_span').innerHTML = course;
-			    	document.getElementById('mar_span').innerHTML = marks;
-			    	document.getElementById('att_span').innerHTML = attendance;
-			    	document.getElementById('pro_span').innerHTML = profeciency;
-
-			    }
 
 			    function add_student(name) {
 
 
 					//var out = '<ol><li>' + name + '</li></ol>';
 					//$('#list_items').append(out);
+					if (typeof web3 !== 'undefined') {
+			            web3 = new Web3(web3.currentProvider);
+			        } else {
+			            // set the provider you want from Web3.providers
+			            web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+			        }
+			        web3.eth.defaultAccount = web3.eth.accounts[0];
+			        var studentList = [];
+
+			        var CoursetroContract = web3.eth.contract(PASTE ABI HERE!);
+			        var webObject = CoursetroContract.at('CONTRACT ADDRESS');
+			        for (i=0; i<students().length; i++){
+			            studentList[i] = webObject.students(i).studentName;
+			            var el = document.createElement('li');
+						el.setAttribute('id', num);
+						el.innerHTML = name;
+
+						el.onclick = function() {get_details(el.id);};
+
+						num = num + 1;
+
+						parent.appendChild(listview);
+						listview.appendChild(el);
+       				 }
 
 					var parent = document.getElementById('list_items');
 
 					var listview = document.createElement('ul');
             		listview.setAttribute('id', 'view');
-
-            		var el = document.createElement('li');
-					el.setAttribute('id', num);
-					el.innerHTML = name;
-
-					el.onclick = function() {get_details(el.id);};
-
-					num = num + 1;
-
-					parent.appendChild(listview);
-					listview.appendChild(el);
-						
-					
+			
 										
 				}
 
 				function get_details(id){
 
-					alert(id);	
+					alert(id);
+					if (typeof web3 !== 'undefined') {
+			            web3 = new Web3(web3.currentProvider);
+			        } else {
+			            // set the provider you want from Web3.providers
+			            web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+			        }
+			        var CoursetroContract = web3.eth.contract(PASTE ABI HERE!);
+			        var webObject = CoursetroContract.at('CONTRACT ADDRESS');
+			        web3.eth.defaultAccount = web3.eth.accounts[0];					
+
+					name = webObject.students(id).studentName.toString();
+	        		teacher =  webObject.peepNames(webObject.students(id).teacher.toString()).toString();
+	        		parent =  webObject.peepNames(webObject.students(id).parent.toString()).toString();
+	        		course =  webObject.students(id).studentName.toString();
+	        		marks =  webObject.students(id).marks.toString();
+	        		attendance =  webObject.students(id).attendance.toString();
+	        		profeciency =  webObject.students(id).proficiency.toString();
+					document.getElementById('name_span').innerHTML = name;
+			    	document.getElementById('teach_span').innerHTML = teacher;
+			    	document.getElementById('par_span').innerHTML = parent;
+			    	document.getElementById('course_span').innerHTML = course;
+			    	document.getElementById('mar_span').innerHTML = marks;
+			    	document.getElementById('att_span').innerHTML = attendance;
+			    	document.getElementById('pro_span').innerHTML = profeciency;	
 
 				}
 			    	
