@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 	<title>student details</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -177,10 +178,6 @@
 
 
 
-
-
-
-
 		    <script type="text/javascript">
 
 	        	var name = "";
@@ -191,6 +188,7 @@
 	        	var marks = "";
 	        	var attendance = "";
 	        	var profeciency = "";
+				var num = 0;	        	
 				
 	        	
 	        	function recieve(){
@@ -224,10 +222,36 @@
 
 			    function add_student() {
 
+			    	var name = ["adith"];
 
-					var out = '<ul><li>Item One</li></ul>';
-					$('#list_items').append(out);
+
+					//var out = '<ol><li>' + name + '</li></ol>';
+					//$('#list_items').append(out);
+
+					var parent = document.getElementById('list_items');
+
+					var listview = document.createElement('ul');
+            		listview.setAttribute('id', 'view');
+
+            		var el = document.createElement('li');
+					el.setAttribute('id', num);
+					el.innerHTML = name;
+
+					el.onclick = function() {get_details(el.id);};
+
+					num = num + 1;
+
+					parent.appendChild(listview);
+					listview.appendChild(el);
+						
+					
 										
+				}
+
+				function get_details(id){
+
+					alert(id);	
+
 				}
 			    	
 			   	function employ(){
