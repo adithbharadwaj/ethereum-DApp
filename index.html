@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+		<script language="javascript" type="text/javascript" src="web3.min.js"></script>
 </head>
 
 <body style="background: grey">
@@ -96,18 +96,18 @@
 
         <p style="padding-bottom: 100px;"></p>
 
-       
-        
+
+
     </div>
 
 </form>
 
 <div class="container">
-		
+
 	<h3 style="padding-left: 30px;">Student list</h3>
 
 
-	<div class = "row">	
+	<div class = "row">
 	<div class="col-lg-2">
 
 		<p style="padding-top: 30px;"> </p>
@@ -117,47 +117,47 @@
 		</div>
 
 	<!--	<button class="btn btn-success" id="add" onclick="add_student()"> Add Student </button> -->
- 		
-	
+
+
 	</div>
 	</div>
 </div>
 
 	<p style="padding-top: 50px;"> </p>
-		
+
 		<div class="container">
- 		 
+
  		 <h2 style="text-align: center;">Details</h2>
 
  		 <p style="padding-top: 50px;"></p>
 
 		 <div class="panel-group">
-		    
+
 		    <div class="panel panel-primary">
 		      <div class="panel-heading">Name</div>
 		      <div class = "panel-body"><span id = "name_span"></span></div>
 		    </div>
-		    
+
 		    <div class="panel panel-primary">
 		      <div class="panel-heading">Teacher</div>
 		      <div class="panel-body"><span id="teach_span"></span></div>
 		    </div>
-		    
+
 		    <div class="panel panel-primary">
 		      <div class="panel-heading">Parent</div>
 		      <div class="panel-body"><span id="par_span"></span></div>
 		    </div>
-		    
+
 		    <div class="panel panel-primary">
 		      <div class="panel-heading">Course</div>
 		      <div class="panel-body"><span id="course_span"></span></div>
 		    </div>
-		    
+
 		    <div class="panel panel-primary">
 		      <div class="panel-heading">Marks</div>
 		      <div class="panel-body"><span id="mar_span"></span></div>
 		    </div>
-		   
+
 		    <div class="panel panel-primary">
 		      <div class="panel-heading">Attendance</div>
 		      <div class="panel-body"><span id="att_span"></span></div>
@@ -172,13 +172,684 @@
 
 			<button type="button" class="btn btn-success" onclick="employ()" id = "emp">Employ</button>
 
-		  	<button type="button" class="btn btn-primary" onclick="display()" id = "disp">display</button> 
+		  	<button type="button" class="btn btn-primary" onclick="display()" id = "disp">display</button>
 
 
 
 
 
 		    <script type="text/javascript">
+
+					var abi = [
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "students",
+		"outputs": [
+			{
+				"name": "attendance",
+				"type": "uint256"
+			},
+			{
+				"name": "marks",
+				"type": "uint256"
+			},
+			{
+				"name": "HWcount",
+				"type": "uint256"
+			},
+			{
+				"name": "studentAddr",
+				"type": "address"
+			},
+			{
+				"name": "teacher",
+				"type": "address"
+			},
+			{
+				"name": "parent",
+				"type": "address"
+			},
+			{
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"name": "course",
+				"type": "string"
+			},
+			{
+				"name": "employer",
+				"type": "string"
+			},
+			{
+				"name": "proficiency",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [],
+		"name": "withdraw",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "studentId",
+				"type": "uint256"
+			},
+			{
+				"name": "newAttendance",
+				"type": "uint256"
+			}
+		],
+		"name": "updateAttendance",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "studentId",
+				"type": "uint256"
+			}
+		],
+		"name": "employStudent",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "studentId",
+				"type": "uint256"
+			},
+			{
+				"name": "newMarks",
+				"type": "uint256"
+			}
+		],
+		"name": "updateMarks",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "studentId",
+				"type": "uint256"
+			}
+		],
+		"name": "getStudent",
+		"outputs": [
+			{
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"name": "teacher",
+				"type": "address"
+			},
+			{
+				"name": "parent",
+				"type": "address"
+			},
+			{
+				"name": "course",
+				"type": "string"
+			},
+			{
+				"name": "marks",
+				"type": "uint256"
+			},
+			{
+				"name": "attendance",
+				"type": "uint256"
+			},
+			{
+				"name": "employer",
+				"type": "string"
+			},
+			{
+				"name": "proficiency",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "studentId",
+				"type": "uint256"
+			},
+			{
+				"name": "newProficiency",
+				"type": "string"
+			}
+		],
+		"name": "updateProficiency",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "newEmpName",
+				"type": "string"
+			},
+			{
+				"name": "newEmpAddress",
+				"type": "address"
+			}
+		],
+		"name": "createEmp",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "studentId",
+				"type": "uint256"
+			}
+		],
+		"name": "maybeSomething",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "studentId",
+				"type": "uint256"
+			}
+		],
+		"name": "finishHW",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "studentId",
+				"type": "uint256"
+			},
+			{
+				"name": "newCourse",
+				"type": "string"
+			}
+		],
+		"name": "updateCourse",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "newTeacherName",
+				"type": "string"
+			},
+			{
+				"name": "newTeacherAddress",
+				"type": "address"
+			}
+		],
+		"name": "createTeacher",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "transferOwnership",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_attendance",
+				"type": "uint256"
+			},
+			{
+				"name": "_marks",
+				"type": "uint256"
+			},
+			{
+				"name": "_studentAddress",
+				"type": "address"
+			},
+			{
+				"name": "_parentAddress",
+				"type": "address"
+			},
+			{
+				"name": "_parentName",
+				"type": "string"
+			},
+			{
+				"name": "_studentName",
+				"type": "string"
+			},
+			{
+				"name": "_course",
+				"type": "string"
+			},
+			{
+				"name": "_prof",
+				"type": "string"
+			}
+		],
+		"name": "createStudent",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "studentId",
+				"type": "uint256"
+			}
+		],
+		"name": "newHW",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "previousOwner",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "OwnershipTransferred",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "studentName",
+				"type": "string"
+			},
+			{
+				"indexed": true,
+				"name": "studentId",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"name": "studentAddress",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "teacherName",
+				"type": "string"
+			}
+		],
+		"name": "NewStudent",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "empName",
+				"type": "string"
+			},
+			{
+				"indexed": true,
+				"name": "empAddress",
+				"type": "address"
+			}
+		],
+		"name": "NewEmp",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "teacherName",
+				"type": "string"
+			},
+			{
+				"indexed": true,
+				"name": "teacherAddress",
+				"type": "address"
+			}
+		],
+		"name": "NewTeacher",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "studentName",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "studentId",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"name": "from",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"name": "to",
+				"type": "uint256"
+			}
+		],
+		"name": "MarksUpdated",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "studentName",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "studentId",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"name": "from",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"name": "to",
+				"type": "uint256"
+			}
+		],
+		"name": "AttendanceUpdated",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "studentName",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "studentId",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"name": "from",
+				"type": "string"
+			},
+			{
+				"indexed": true,
+				"name": "to",
+				"type": "string"
+			}
+		],
+		"name": "CourseUpdated",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "studentName",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "studentId",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"name": "from",
+				"type": "string"
+			},
+			{
+				"indexed": true,
+				"name": "to",
+				"type": "string"
+			}
+		],
+		"name": "ProfUpdated",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "studentName",
+				"type": "string"
+			},
+			{
+				"indexed": true,
+				"name": "studentId",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "presentHWCount",
+				"type": "uint256"
+			}
+		],
+		"name": "NewHW",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "studentName",
+				"type": "string"
+			},
+			{
+				"indexed": true,
+				"name": "studentId",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"name": "studentAddress",
+				"type": "address"
+			}
+		],
+		"name": "HWDone",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "studentName",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "studentId",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"name": "empName",
+				"type": "string"
+			},
+			{
+				"indexed": true,
+				"name": "empAddress",
+				"type": "address"
+			}
+		],
+		"name": "StudentEmployed",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "studentName",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "studentId",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"name": "parentName",
+				"type": "string"
+			},
+			{
+				"indexed": true,
+				"name": "parentAddress",
+				"type": "address"
+			}
+		],
+		"name": "YesParent",
+		"type": "event"
+	}
+];
+
+					var address = '0xE58abe247d1f2Cdb278037566A50cBB58a3fc6A7';
+					var webObject;
+
+					window.addEventListener('load', function() {
+
+
+
+						//var Web3 = require('web3');
+						//alert("hi");
+						if (typeof web3 !== 'undefined') {
+						//Use Mist/MetaMask's provider
+						alert("Aagle ide");
+						web3 = new Web3(web3.currentProvider);
+						alert("Meta banthu");
+						} else {
+							alert("Install Metamask");
+							web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+							alert("Http banthu");
+						}
+						alert("Yeno aithu");
+
+						//web3.eth.defaultAccount = web3.eth.accounts[4];
+						//alert(web3.eth.defaultAccount);
+						webObject = new web3.eth.Contract(abi, address);
+
+
+						alert("here");
+
+
+						//Now you can start your app & access web3 freely: baaals
+
+				})
 
 	        	var name = "";
 	        	var teacher = "";
@@ -188,29 +859,17 @@
 	        	var marks = "";
 	        	var attendance = "";
 	        	var profeciency = "";
-				var num = 0;
-
-				/*if (typeof web3 !== 'undefined') {
-					            web3 = new Web3(web3.currentProvider);
-					        } else {
-					            // set the provider you want from Web3.providers
-					            web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-					        }
-					        web3.eth.defaultAccount = web3.eth.accounts[0];
-
-					        var CoursetroContract = web3.eth.contract(PASTE ABI HERE!);
-					        var webObject = CoursetroContract.at('CONTRACT ADDRESS');*/
+						var num = 0;
 
 				$('#contact-form').submit(function () {
-
  					recieve();
  					return false;
-				
-				});	        	
-				
-	        	
+				});
+
+
 	        	function recieve(){
 
+							alert("inside receive");
 	        		name = document.getElementById('nam').value;
 	        		teacher = document.getElementById('teacher').value;
 	        		parent = document.getElementById('parent').value;
@@ -219,29 +878,27 @@
 	        		marks = document.getElementById('marks').value;
 	        		attendance = document.getElementById('attendance').value;
 	        		profeciency = document.getElementById('profeciency').value;
-					  
-					/*webObject.createStudent(Number(attendance),
-					                            Number(marks),
-					                            string parent_address,
-					                            string parent,
-					                            string name,
-					                            string course,
-					                            string profeciency);*/
 
-	        		add_student(name);
+							webObject.methods.createStudent(Number(attendance),
+					                            Number(marks),
+					                            String(parent_address),
+					                            String(parent),
+					                            String(name),
+					                            String(course),
+					                            String(profeciency));
+
+	        		add_student(String(name));
 
 	        	}
-				
-
 			    function add_student(name) {
 
 
 					//var out = '<ol><li>' + name + '</li></ol>';
 					//$('#list_items').append(out);
-				
-			        var studentList = ["adith", "keerthi"];
 
-			        						
+			        var studentList = ["Adith", "Kee"];
+
+
 					var parent = document.getElementById('list_items');
 
 					var listview = document.createElement('ul');
@@ -250,27 +907,27 @@
             		parent.appendChild(listview);
 
 			        for (i=0; i<studentList.length; i++){
-			            //studentList[i] = webObject.students(i).studentName;
+			            //(studentList[i],,,,,,,) = webObject.methods.getStudent(i);
 			            var el = document.createElement('li');
-						el.setAttribute('id', num);
-						el.innerHTML = studentList[i];
+									el.setAttribute('id', num);
+									el.innerHTML = studentList[i];
 
-						listview.appendChild(el);
+									listview.appendChild(el);
 
-						el.onclick = function() {get_details(this);};
+									el.onclick = function() {get_details(this);};
 
-						num = num + 1;
-       				 }
+									num = num + 1;
+       				}
 
 
-			
-										
+
+
 				}
 
 				function get_details(el){
 
 					alert(el.id);
-;					
+;
 
 					/*name = webObject.students(id).studentName.toString();
 	        		teacher =  webObject.peepNames(webObject.students(id).teacher.toString()).toString();
@@ -280,21 +937,21 @@
 	        		attendance =  webObject.students(id).attendance.toString();
 	        		profeciency =  webObject.students(id).proficiency.toString();
 	        		*/
-					document.getElementById('name_span').innerHTML = name;
+						document.getElementById('name_span').innerHTML = name;
 			    	document.getElementById('teach_span').innerHTML = teacher;
 			    	document.getElementById('par_span').innerHTML = parent;
 			    	document.getElementById('course_span').innerHTML = course;
 			    	document.getElementById('mar_span').innerHTML = marks;
 			    	document.getElementById('att_span').innerHTML = attendance;
-			    	document.getElementById('pro_span').innerHTML = profeciency;	
+			    	document.getElementById('pro_span').innerHTML = profeciency;
 
 				}
-			    	
+
 			   	function employ(){
 			    	alert('employed');
 			    }
 
-		    	
+
 		    </script>
 
 		  </div>
