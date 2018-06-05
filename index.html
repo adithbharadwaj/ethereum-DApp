@@ -202,7 +202,6 @@
 					        var webObject = CoursetroContract.at('CONTRACT ADDRESS');*/
 
 				$('#contact-form').submit(function () {
-					alert("hello1");
 
  					recieve();
  					return false;
@@ -228,7 +227,6 @@
 					                            string name,
 					                            string course,
 					                            string profeciency);*/
-					alert("hello");
 
 	        		add_student(name);
 
@@ -241,42 +239,47 @@
 					//var out = '<ol><li>' + name + '</li></ol>';
 					//$('#list_items').append(out);
 				
-			        var studentList = [];
+			        var studentList = ["adith", "keerthi"];
 
-			        for (i=0; i<students().length; i++){
-			            studentList[i] = webObject.students(i).studentName;
-			            var el = document.createElement('li');
-						el.setAttribute('id', num);
-						el.innerHTML = name;
-
-						el.onclick = function() {get_details(el.id);};
-
-						num = num + 1;
-
-						parent.appendChild(listview);
-						listview.appendChild(el);
-       				 }
-
+			        						
 					var parent = document.getElementById('list_items');
 
 					var listview = document.createElement('ul');
             		listview.setAttribute('id', 'view');
+
+            		parent.appendChild(listview);
+
+			        for (i=0; i<studentList.length; i++){
+			            //studentList[i] = webObject.students(i).studentName;
+			            var el = document.createElement('li');
+						el.setAttribute('id', num);
+						el.innerHTML = studentList[i];
+
+						listview.appendChild(el);
+
+						el.onclick = function() {get_details(this);};
+
+						num = num + 1;
+       				 }
+
+
 			
 										
 				}
 
-				function get_details(id){
+				function get_details(el){
 
-					alert(id);
+					alert(el.id);
 ;					
 
-					name = webObject.students(id).studentName.toString();
+					/*name = webObject.students(id).studentName.toString();
 	        		teacher =  webObject.peepNames(webObject.students(id).teacher.toString()).toString();
 	        		parent =  webObject.peepNames(webObject.students(id).parent.toString()).toString();
 	        		course =  webObject.students(id).studentName.toString();
 	        		marks =  webObject.students(id).marks.toString();
 	        		attendance =  webObject.students(id).attendance.toString();
 	        		profeciency =  webObject.students(id).proficiency.toString();
+	        		*/
 					document.getElementById('name_span').innerHTML = name;
 			    	document.getElementById('teach_span').innerHTML = teacher;
 			    	document.getElementById('par_span').innerHTML = parent;
