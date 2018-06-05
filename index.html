@@ -8,10 +8,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<script language="javascript" type="text/javascript" src="web3.min.js"></script>
+		<!--<script language="javascript" type="text/javascript" src="web3.min.js"></script> -->
 </head>
 
-<body style="background: grey">
+<body style="background: #ddd;">
 
 	<h1 style="text-align: center;">Details Form</h1>
 
@@ -24,14 +24,23 @@
     <div class="col-lg-12" >
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label for="form_name">Name *</label>
                     <input id="nam" type="text" name="nam" class="form-control" placeholder="Please enter your name *" required="required" data-error="Firstname is required.">
                     <div class="help-block with-errors"></div>
                 </div>
             </div>
-            <div class="col-md-6">
+            
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="form_name">Student Address</label>
+                    <input id="student_address" type="text" name="student_address" class="form-control" required="required" data-error="Address is required.">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
                 <div class="form-group">
                     <label for="form_lastname">Teacher *</label>
                     <input id="teacher" type="text" name="teacher" class="form-control" required="required" data-error="Lastname is required.">
@@ -79,7 +88,7 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="form_phone">Profeciency *</label>
+                    <label for="form_phone">Proficiency *</label>
                     <input id="profeciency" type="text" name="profeciency" class="form-control">
                     <div class="help-block with-errors"></div>
                 </div>
@@ -818,7 +827,7 @@
 	}
 ];
 
-					var address = '0xE58abe247d1f2Cdb278037566A50cBB58a3fc6A7';
+					var address = '0xe1402337b12192d0b653b6D48D65a3C32eaa55C0';
 					var webObject;
 
 					window.addEventListener('load', function() {
@@ -829,22 +838,22 @@
 						//alert("hi");
 						if (typeof web3 !== 'undefined') {
 						//Use Mist/MetaMask's provider
-						alert("Aagle ide");
+						
 						web3 = new Web3(web3.currentProvider);
-						alert("Meta banthu");
+						
 						} else {
 							alert("Install Metamask");
 							web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 							alert("Http banthu");
 						}
-						alert("Yeno aithu");
+						
 
-						//web3.eth.defaultAccount = web3.eth.accounts[4];
-						//alert(web3.eth.defaultAccount);
+						web3.eth.defaultAccount = web3.eth.accounts[0];
+						
 						webObject = new web3.eth.Contract(abi, address);
 
 
-						alert("here");
+						
 
 
 						//Now you can start your app & access web3 freely: baaals
@@ -852,6 +861,7 @@
 				})
 
 	        	var name = "";
+	        	var student_address = "";
 	        	var teacher = "";
 	        	var parent = "";
 	        	var parent_address = "";
@@ -859,7 +869,7 @@
 	        	var marks = "";
 	        	var attendance = "";
 	        	var profeciency = "";
-						var num = 0;
+				var num = 0;
 
 				$('#contact-form').submit(function () {
  					recieve();
@@ -869,8 +879,10 @@
 
 	        	function recieve(){
 
-							alert("inside receive");
+					alert("inside receive");
+
 	        		name = document.getElementById('nam').value;
+	        		student_address = document.getElementById('student_address').value;
 	        		teacher = document.getElementById('teacher').value;
 	        		parent = document.getElementById('parent').value;
 	        		parent_address = document.getElementById('parent_address').value;
@@ -879,13 +891,13 @@
 	        		attendance = document.getElementById('attendance').value;
 	        		profeciency = document.getElementById('profeciency').value;
 
-							webObject.methods.createStudent(Number(attendance),
+					webObject.methods.createStudent(Number(attendance),
 					                            Number(marks),
 					                            String(parent_address),
 					                            String(parent),
 					                            String(name),
 					                            String(course),
-					                            String(profeciency));
+					                            String(profeciency)).send({ from: web3.defaultAccount, value: web3.utils.toWei("0.01")}).on("receipt", function(receipt){alert("Student made")}).on("error", function(error){alert("student not made")}); 
 
 	        		add_student(String(name));
 

@@ -93,7 +93,7 @@ contract Students {
                             string _parentName,
                             string _studentName,
                             string _course,
-                            string _prof) public payable ifTeacher(msg.sender) {
+                            string _prof) public payable /*ifTeacher(msg.sender)*/ {
 
         require(msg.value>=fee);
         msg.sender.transfer(msg.value-fee);
