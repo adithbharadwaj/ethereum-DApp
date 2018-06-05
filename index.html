@@ -190,7 +190,19 @@
 	        	var profeciency = "";
 				var num = 0;
 
+				/*if (typeof web3 !== 'undefined') {
+					            web3 = new Web3(web3.currentProvider);
+					        } else {
+					            // set the provider you want from Web3.providers
+					            web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+					        }
+					        web3.eth.defaultAccount = web3.eth.accounts[0];
+
+					        var CoursetroContract = web3.eth.contract(PASTE ABI HERE!);
+					        var webObject = CoursetroContract.at('CONTRACT ADDRESS');*/
+
 				$('#contact-form').submit(function () {
+					alert("hello1");
 
  					recieve();
  					return false;
@@ -208,26 +220,15 @@
 	        		marks = document.getElementById('marks').value;
 	        		attendance = document.getElementById('attendance').value;
 	        		profeciency = document.getElementById('profeciency').value;
-					  if (typeof web3 !== 'undefined') {
-					            web3 = new Web3(web3.currentProvider);
-					        } else {
-					            // set the provider you want from Web3.providers
-					            web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-					        }
-					        web3.eth.defaultAccount = web3.eth.accounts[0];
-
-					        var CoursetroContract = web3.eth.contract(PASTE ABI HERE!);
-					        var Coursetro = CoursetroContract.at('CONTRACT ADDRESS');
-					        console.log(Coursetro);
-					        $("#submit").click(function() {
-					                Coursetro.createStudent(Number(attendance),
+					  
+					/*webObject.createStudent(Number(attendance),
 					                            Number(marks),
 					                            string parent_address,
 					                            string parent,
 					                            string name,
 					                            string course,
-					                            string profeciency)
-					             });
+					                            string profeciency);*/
+					alert("hello");
 
 	        		add_student(name);
 
@@ -239,17 +240,9 @@
 
 					//var out = '<ol><li>' + name + '</li></ol>';
 					//$('#list_items').append(out);
-					if (typeof web3 !== 'undefined') {
-			            web3 = new Web3(web3.currentProvider);
-			        } else {
-			            // set the provider you want from Web3.providers
-			            web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-			        }
-			        web3.eth.defaultAccount = web3.eth.accounts[0];
+				
 			        var studentList = [];
 
-			        var CoursetroContract = web3.eth.contract(PASTE ABI HERE!);
-			        var webObject = CoursetroContract.at('CONTRACT ADDRESS');
 			        for (i=0; i<students().length; i++){
 			            studentList[i] = webObject.students(i).studentName;
 			            var el = document.createElement('li');
@@ -275,15 +268,7 @@
 				function get_details(id){
 
 					alert(id);
-					if (typeof web3 !== 'undefined') {
-			            web3 = new Web3(web3.currentProvider);
-			        } else {
-			            // set the provider you want from Web3.providers
-			            web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-			        }
-			        var CoursetroContract = web3.eth.contract(PASTE ABI HERE!);
-			        var webObject = CoursetroContract.at('CONTRACT ADDRESS');
-			        web3.eth.defaultAccount = web3.eth.accounts[0];					
+;					
 
 					name = webObject.students(id).studentName.toString();
 	        		teacher =  webObject.peepNames(webObject.students(id).teacher.toString()).toString();
