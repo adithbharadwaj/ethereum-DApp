@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<!--<script src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js"></script> -->
 		<!--<script language="javascript" type="text/javascript" src="web3.min.js"></script> -->
 </head>
 
@@ -25,22 +24,29 @@
     <div class="col-lg-12" >
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label for="form_name">Name *</label>
                     <input id="nam" type="text" name="nam" class="form-control" placeholder="Please enter your name *" required="required" data-error="Firstname is required.">
                     <div class="help-block with-errors"></div>
                 </div>
             </div>
-            
-            <div class="col-md-6">
+
+            <div class="col-md-4">
                 <div class="form-group">
-                    <label for="form_name">Student Address</label>
+                    <label for="form_name">Student Address *</label>
                     <input id="student_address" type="text" name="student_address" class="form-control" required="required" data-error="Address is required.">
                     <div class="help-block with-errors"></div>
                 </div>
             </div>
-           
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="form_lastname">Teacher *</label>
+                    <input id="teacher" type="text" name="teacher" class="form-control" required="required" data-error="Lastname is required.">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-6">
@@ -826,41 +832,17 @@
 
 					window.addEventListener('load', function() {
 
-
-
-						//var Web3 = require('web3');
-						//alert("hi");
 						if (typeof web3 !== 'undefined') {
 						//Use Mist/MetaMask's provider
-						
-							web3 = new Web3(web3.currentProvider);
-						
+						web3 = new Web3(web3.currentProvider);
 						} else {
 							alert("Install Metamask");
 							web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-							alert("Http banthu");
+							alert("Using HTTP");
 						}
-
-						try {
-							
-							var mbst = web3.eth.contract(abi);
-							
-						}
-						catch(err) {
-						   console.log(err);
-						}
-						try {
-							webObject = mbst.at(address);
-							
-						} catch(e) {
-							console.log(e);
-						}
-
-							
-						
-
-						//Now you can start your app & access web3 freely: baaals
-
+						web3.eth.defaultAccount = web3.eth.accounts[0];
+						var mbst = web3.eth.contract(abi);
+						webObject = mbst.at(address);
 				})
 
 	        	var name = "";
@@ -881,9 +863,7 @@
 
 
 	        	function recieve(){
-
-					alert("inside receive");
-
+							alert("Inside Recieve");
 	        		name = document.getElementById('nam').value;
 	        		student_address = document.getElementById('student_address').value;
 	        		teacher = document.getElementById('teacher').value;
@@ -894,32 +874,39 @@
 	        		attendance = document.getElementById('attendance').value;
 	        		profeciency = document.getElementById('profeciency').value;
 
-					webObject.methods.createStudent(Number(attendance),
+							alert("Call create student");
+							try {
+							return webObject.createStudent(Number(attendance),
 					                            Number(marks),
+																			String(student_address),
 					                            String(parent_address),
 					                            String(parent),
 					                            String(name),
 					                            String(course),
-					                            String(profeciency)).send({ from: web3.defaultAccount, value: web3.utils.toWei("0.01")}).on("receipt", function(receipt){alert("Student made")}).on("error", function(error){alert("student not made")}); 
+					                            String(profeciency),
+																			function(err, res) {
+																				if(!err)
+																					alert("success");
+																				else {
+																					alert("Error while creating student");
+																				}
+																			})
+																			//.send({ from: web3.defaultAccount, value: web3.utils.toWei("0.01")})
+							} catch (e) { console.log(e); }
+							alert("Student created");
 
 	        		add_student(String(name));
-
 	        	}
+
+
 			    function add_student(name) {
 
-
-					//var out = '<ol><li>' + name + '</li></ol>';
-					//$('#list_items').append(out);
-
 			        var studentList = ["Adith", "Kee"];
+							var parent = document.getElementById('list_items');
+							var listview = document.createElement('ul');
 
-
-					var parent = document.getElementById('list_items');
-
-					var listview = document.createElement('ul');
-            		listview.setAttribute('id', 'view');
-
-            		parent.appendChild(listview);
+            	listview.setAttribute('id', 'view');
+            	parent.appendChild(listview);
 
 			        for (i=0; i<studentList.length; i++){
 			            //(studentList[i],,,,,,,) = webObject.methods.getStudent(i);
@@ -965,7 +952,6 @@
 			   	function employ(){
 			    	alert('employed');
 			    }
-
 
 		    </script>
 
