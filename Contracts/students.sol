@@ -3,7 +3,7 @@ pragma solidity ^0.4.0;
 contract Students {
 
     //Ownable inda
-    address public owner;
+    address public owner;   
 
     event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
 
@@ -218,5 +218,13 @@ contract Students {
 
     function withdraw() public onlyOwner {
         owner.transfer(address(this).balance);
+    }
+    
+    function getStudentName(uint studentId) public view returns(string) {
+        return students[studentId].name;
+    }
+    
+    function getSize() public view returns(uint){
+        return students.length;
     }
 }
