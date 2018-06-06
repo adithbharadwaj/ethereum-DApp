@@ -820,7 +820,7 @@
 	}
 ];
 
-					var address = '0xe1402337b12192d0b653b6D48D65a3C32eaa55C0';
+					var address = '0xDa50352ff3785b0910B9401c4dd519d3Ba21eA30';
 					var webObject;
 
 					window.addEventListener('load', function() {
@@ -856,7 +856,7 @@
 
 
 	        	function recieve(){
-							
+
 	        		name = document.getElementById('nam').value;
 	        		student_address = document.getElementById('student_address').value;
 	        		parent = document.getElementById('parent').value;
@@ -866,10 +866,10 @@
 	        		attendance = document.getElementById('attendance').value;
 	        		profeciency = document.getElementById('profeciency').value;
 
-							
+
 							try {
-								
-								return webObject.createStudent(Number(attendance),
+
+								webObject.createStudent(Number(attendance),
 					                            Number(marks),
 												String(student_address),
 					                            String(parent_address),
@@ -877,19 +877,15 @@
 					                            String(name),
 					                            String(course),
 					                            String(profeciency),
+																			{ from: web3.eth.defaultAccount, gas: 3000000, value: web3.toWei(0.01)},
 																			function(err, res) {
 																				if(!err)
 																					alert("success");
-																				else {
-																					alert("Error while creating student");
-																				}
+																				else
+																					console.log(err);
 																			})
 																			//.send({ from: web3.defaultAccount, value: web3.utils.toWei("0.01")})
-							} catch (e) { console.log(e); }
-
-
-							alert("Student created");
-
+							} catch (e) { alert(e); }
 	        		add_student(String(name));
 	        	}
 
@@ -915,10 +911,6 @@
 
 									num = num + 1;
        				}
-
-
-
-
 				}
 
 				function get_details(el){
