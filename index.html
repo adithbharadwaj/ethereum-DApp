@@ -903,33 +903,41 @@
 
 							try {
 
-								webObject.createStudent(Number(attendance),
-					                            Number(marks),
-												String(student_address),
-					                            String(parent_address),
-					                            String(parent),
-					                            String(name),
-					                            String(course),
-					                            String(profeciency),
-																			{ from: web3.eth.defaultAccount, gas: 3000000, value: web3.toWei(0.01)},
-																			function(err, res) {
-																				if(!err)
-																					alert("successCreate");
-																				else
-																					console.log(err);
-																				return false;
-																			})
+								webObject.createStudent(    Number(attendance),
+								                            Number(marks),
+															String(student_address),
+								                            String(parent_address),
+								                            String(parent),
+								                            String(name),
+								                            String(course),
+								                            String(profeciency),
+															{ from: web3.eth.defaultAccount, gas: 3000000, value: web3.toWei(0.01)},
+																						
+															function(err, res) {
+																if(!err)
+																	alert("successCreate");
+																else
+																	console.log(err);
+																return false;
+															})
+							
 																			//.send({ from: web3.defaultAccount, value: web3.utils.toWei("0.01")})
 							} catch (e) { alert(e); }
-	        		add_student(String(name));
+	        		
+	        		add_student();
+	        	
+
 	        	}
 
 
-			    function add_student(name) {
+			    function add_student() {
 
 			    	alert('Submit on MetaMask!');
 			    	update_view();
             	}
+
+
+
 
             	function update_view() {
             		var studentList = [];
@@ -949,6 +957,7 @@
 														for (i=	0; i< res; i++) {
 															try {
 															        webObject.getStudent(i,
+															            				
 															            				function(err1, res1) {
 																							if(!err1)
 																								;
@@ -979,30 +988,40 @@
 			        
 				function get_details(el){
 
-					alert(el.id);
-;
+					//alert(el.id);
+					
+					webObject.getStudent(el.id, function(err, res) { // callback function
+													
+													if(!err)
+														;
+													else
+														console.log(err);
+														//return false;
+													
 
-					/*name = webObject.students(id).studentName.toString();
-	        		teacher =  webObject.peepNames(webObject.students(id).teacher.toString()).toString();
-	        		parent =  webObject.peepNames(webObject.students(id).parent.toString()).toString();
-	        		course =  webObject.students(id).studentName.toString();
-	        		marks =  webObject.students(id).marks.toString();
-	        		attendance =  webObject.students(id).attendance.toString();
-	        		profeciency =  webObject.students(id).proficiency.toString();
-	        		*/
-					document.getElementById('name_span').innerHTML = name;
-			    	document.getElementById('teach_span').innerHTML = teacher;
-			    	document.getElementById('par_span').innerHTML = parent;
-			    	document.getElementById('course_span').innerHTML = course;
-			    	document.getElementById('mar_span').innerHTML = marks;
-			    	document.getElementById('att_span').innerHTML = attendance;
-			    	document.getElementById('pro_span').innerHTML = profeciency;
+													document.getElementById('name_span').innerHTML = res[0];
+											    	document.getElementById('teach_span').innerHTML = res[1];
+											    	document.getElementById('par_span').innerHTML = res[2];
+											    	document.getElementById('course_span').innerHTML = res[3];
+											    	document.getElementById('mar_span').innerHTML = res[4];
+											    	document.getElementById('att_span').innerHTML = res[5];
+											    	document.getElementById('pro_span').innerHTML = res[6];
+
+													});
+
+
 
 				}
 
+
+
 			   	function employ(){
+			   		
 			    	alert('employed');
 			    }
+
+
+
 
 		    </script>
 
