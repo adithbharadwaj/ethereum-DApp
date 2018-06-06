@@ -24,7 +24,7 @@
     <div class="col-lg-12" >
 
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label for="form_name">Name *</label>
                     <input id="nam" type="text" name="nam" class="form-control" placeholder="Please enter your name *" required="required" data-error="Firstname is required.">
@@ -32,7 +32,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label for="form_name">Student Address *</label>
                     <input id="student_address" type="text" name="student_address" class="form-control" required="required" data-error="Address is required.">
@@ -40,13 +40,6 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="form_lastname">Teacher *</label>
-                    <input id="teacher" type="text" name="teacher" class="form-control" required="required" data-error="Lastname is required.">
-                    <div class="help-block with-errors"></div>
-                </div>
-            </div>
         </div>
         <div class="row">
             <div class="col-md-6">
@@ -863,10 +856,9 @@
 
 
 	        	function recieve(){
-							alert("Inside Recieve");
+							
 	        		name = document.getElementById('nam').value;
 	        		student_address = document.getElementById('student_address').value;
-	        		teacher = document.getElementById('teacher').value;
 	        		parent = document.getElementById('parent').value;
 	        		parent_address = document.getElementById('parent_address').value;
 	        		course = document.getElementById('course').value;
@@ -874,9 +866,10 @@
 	        		attendance = document.getElementById('attendance').value;
 	        		profeciency = document.getElementById('profeciency').value;
 
-							alert("Call create student");
+							
 							try {
-							return webObject.createStudent(Number(attendance),
+								
+								return webObject.createStudent(Number(attendance),
 					                            Number(marks),
 												String(student_address),
 					                            String(parent_address),
@@ -893,6 +886,8 @@
 																			})
 																			//.send({ from: web3.defaultAccount, value: web3.utils.toWei("0.01")})
 							} catch (e) { console.log(e); }
+
+
 							alert("Student created");
 
 	        		add_student(String(name));
