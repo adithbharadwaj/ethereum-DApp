@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<!--<script src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js"></script> -->
 		<!--<script language="javascript" type="text/javascript" src="web3.min.js"></script> -->
 </head>
 
@@ -24,7 +25,7 @@
     <div class="col-lg-12" >
 
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label for="form_name">Name *</label>
                     <input id="nam" type="text" name="nam" class="form-control" placeholder="Please enter your name *" required="required" data-error="Firstname is required.">
@@ -32,21 +33,14 @@
                 </div>
             </div>
             
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label for="form_name">Student Address</label>
                     <input id="student_address" type="text" name="student_address" class="form-control" required="required" data-error="Address is required.">
                     <div class="help-block with-errors"></div>
                 </div>
             </div>
-            
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label for="form_lastname">Teacher *</label>
-                    <input id="teacher" type="text" name="teacher" class="form-control" required="required" data-error="Lastname is required.">
-                    <div class="help-block with-errors"></div>
-                </div>
-            </div>
+           
         </div>
         <div class="row">
             <div class="col-md-6">
@@ -839,22 +833,31 @@
 						if (typeof web3 !== 'undefined') {
 						//Use Mist/MetaMask's provider
 						
-						web3 = new Web3(web3.currentProvider);
+							web3 = new Web3(web3.currentProvider);
 						
 						} else {
 							alert("Install Metamask");
 							web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 							alert("Http banthu");
 						}
+
+						try {
+							
+							var mbst = web3.eth.contract(abi);
+							
+						}
+						catch(err) {
+						   console.log(err);
+						}
+						try {
+							webObject = mbst.at(address);
+							
+						} catch(e) {
+							console.log(e);
+						}
+
+							
 						
-
-						web3.eth.defaultAccount = web3.eth.accounts[0];
-						
-						webObject = new web3.eth.Contract(abi, address);
-
-
-						
-
 
 						//Now you can start your app & access web3 freely: baaals
 
