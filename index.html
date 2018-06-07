@@ -110,6 +110,11 @@
 	</form>
 
 
+	<button class="btn btn-primary" id="add_std" onclick="location.href = 'add_empl.html'; ">Add employer</button>
+	<button class="btn btn-primary" id="add_teach" href = "add_teacher.html" onclick="location.href = 'add_teacher.html'; ">Add teacher</button>
+	<button class="btn btn-primary" id="add_std" onclick="location.href = 'edit.html'; ">Edit</button>
+
+
 <!-- a container(wrapper) to display the names of the students that have been added.   
 	 the list of students is dynamically displayed. when you click on the name of a particular 
 	 student, the details of that student are displayed. 
@@ -214,7 +219,7 @@
 				// (we deploy the smart contract in our private network using metamask on port 8545. in ganache, we should go to 
 				// settings and change the port to 8545. )
 
-				var address = '0x49d2955b20949e344ac61c156e7a6635527c1702';
+				//var address = '0x49d2955b20949e344ac61c156e7a6635527c1702';
 				
 				// webObject is used to interact with the solidity code from the front-end (html/js)
 
@@ -248,7 +253,12 @@
 						var mbst = web3.eth.contract(abi);
 						
 						// we set the address of the contract to the webObject so that it can locate the contract. 
-						webObject = mbst.at(address);
+						try{
+							webObject = mbst.at(address);
+						}
+						catch(e){
+							console.log(e);
+						}	
 
 						// we call the update_view() function which updates the page with the list of students that are already\
 						// in the database.
