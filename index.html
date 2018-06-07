@@ -8,8 +8,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<!--<script language="javascript" type="text/javascript" src="web3.min.js"></script> -->
+
 </head>
+
+
 
 <body style="background: #ddd;">
 
@@ -17,92 +19,100 @@
 
 	<p style="padding-bottom: 50px;"></p>
 
+	<!-- details form. here, the teacher (only teacher) can enter the details and add a new student. -->
+
 	<form id="contact-form" method="post" role="form">
 
-    <div class="messages"></div>
+	    <div class="col-lg-12" >
 
-    <div class="col-lg-12" >
+	        <div class="row">
+	            <div class="col-md-6">
+	                <div class="form-group">
+	                    <label for="form_name">Name *</label>
+	                    <input id="nam" type="text" name="nam" class="form-control" placeholder="Please enter your name *" required="required" data-error="Firstname is required.">
+	                    <div class="help-block with-errors"></div>
+	                </div>
+	            </div>
 
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="form_name">Name *</label>
-                    <input id="nam" type="text" name="nam" class="form-control" placeholder="Please enter your name *" required="required" data-error="Firstname is required.">
-                    <div class="help-block with-errors"></div>
-                </div>
-            </div>
+	            <div class="col-md-6">
+	                <div class="form-group">
+	                    <label for="form_name">Student Address *</label>
+	                    <input id="student_address" type="text" name="student_address" class="form-control" required="required" data-error="Address is required.">
+	                    <div class="help-block with-errors"></div>
+	                </div>
+	            </div>
 
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="form_name">Student Address *</label>
-                    <input id="student_address" type="text" name="student_address" class="form-control" required="required" data-error="Address is required.">
-                    <div class="help-block with-errors"></div>
-                </div>
-            </div>
+	        </div>
+	        <div class="row">
+	            <div class="col-md-6">
+	                <div class="form-group">
+	                    <label for="form_email">Parent *</label>
+	                    <input id="parent" type="text" name="parent" class="form-control" required="required" data-error="Valid email is required.">
+	                    <div class="help-block with-errors"></div>
+	                </div>
+	            </div>
+	            <div class="col-md-6">
+	                <div class="form-group">
+	                    <label for="form_phone">Parent Address *</label>
+	                    <input id="parent_address" type="text" name="parent_address" class="form-control">
+	                    <div class="help-block with-errors"></div>
+	                </div>
+	            </div>
+	            <div class="col-md-6">
+	                <div class="form-group">
+	                    <label for="form_name">Course *</label>
+	                    <input id="course" type="text" name="course" class="form-control" required="required" data-error="Firstname is required.">
+	                    <div class="help-block with-errors"></div>
+	                </div>
+	            </div>
+	            <div class="col-md-6">
+	                <div class="form-group">
+	                    <label for="form_lastname">Marks *</label>
+	                    <input id="marks" type="text" name="marks" class="form-control" required="required" data-error="Lastname is required.">
+	                    <div class="help-block with-errors"></div>
+	                </div>
+	            </div>
+	        </div>
+	        <div class="row">
+	            <div class="col-md-6">
+	                <div class="form-group">
+	                    <label for="form_email">Attendance *</label>
+	                    <input id="attendance" type="text" name="attendance" class="form-control" required="required" data-error="Valid email is required.">
+	                    <div class="help-block with-errors"></div>
+	                </div>
+	            </div>
+	            <div class="col-md-6">
+	                <div class="form-group">
+	                    <label for="form_phone">Proficiency *</label>
+	                    <input id="profeciency" type="text" name="profeciency" class="form-control">
+	                    <div class="help-block with-errors"></div>
+	                </div>
+	            </div>
+	        </div>
 
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="form_email">Parent *</label>
-                    <input id="parent" type="text" name="parent" class="form-control" required="required" data-error="Valid email is required.">
-                    <div class="help-block with-errors"></div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="form_phone">Parent Address *</label>
-                    <input id="parent_address" type="text" name="parent_address" class="form-control">
-                    <div class="help-block with-errors"></div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="form_name">Course *</label>
-                    <input id="course" type="text" name="course" class="form-control" required="required" data-error="Firstname is required.">
-                    <div class="help-block with-errors"></div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="form_lastname">Marks *</label>
-                    <input id="marks" type="text" name="marks" class="form-control" required="required" data-error="Lastname is required.">
-                    <div class="help-block with-errors"></div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="form_email">Attendance *</label>
-                    <input id="attendance" type="text" name="attendance" class="form-control" required="required" data-error="Valid email is required.">
-                    <div class="help-block with-errors"></div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="form_phone">Proficiency *</label>
-                    <input id="profeciency" type="text" name="profeciency" class="form-control">
-                    <div class="help-block with-errors"></div>
-                </div>
-            </div>
-        </div>
+	        <p style="padding-top: 20px;"></p>
 
-        <p style="padding-top: 20px;"></p>
+	        <!-- SUBMIT button. when a teacher clicks on submit, the details of that student is sent to the ethereum backend. -->
 
-        <div class="row">
-            <div class="col-md-12">
-                <input type="submit" class="btn btn-success" id="submit" >
-            </div>
-        </div>
+	        <div class="row">
+	            <div class="col-md-12">
+	                <input type="submit" class="btn btn-success" id="submit" >
+	            </div>
+	        </div>
 
-        <p style="padding-bottom: 100px;"></p>
+	        <p style="padding-bottom: 100px;"></p>
 
 
 
-    </div>
+	    </div>
 
-</form>
+	</form>
+
+
+<!-- a container(wrapper) to display the names of the students that have been added.   
+	 the list of students is dynamically displayed. when you click on the name of a particular 
+	 student, the details of that student are displayed. 
+-->
 
 <div class="container">
 
@@ -114,26 +124,35 @@
 
 		<p style="padding-top: 30px;"> </p>
 
+		<!-- when we click on submit, the name of that student is appended to this div. -->
+
 		<div id="list_items">
 
 		</div>
 
-	<!--	<button class="btn btn-success" id="add" onclick="add_student()"> Add Student </button> -->
-
 
 	</div>
 	</div>
+
 </div>
+
+	
+	<!-- A panel to display the details of the student. -->
+
 
 	<p style="padding-top: 50px;"> </p>
 
-		<div class="container">
+	<div class="container">
 
  		 <h2 style="text-align: center;">Details</h2>
 
  		 <p style="padding-top: 50px;"></p>
 
 		 <div class="panel-group">
+
+		 <!-- every span tag has a unique id. when you click on the name of a particular student, the details
+			  are displayed in the span tag.	
+		  -->
 
 		    <div class="panel panel-primary">
 		      <div class="panel-heading">Name</div>
@@ -172,17 +191,22 @@
 
  		 	<p style="padding-top: 50px;"></p>
 
+ 		 	<!-- EMPLOY button. the employer can click on this button to employ a particular student. -->
+
 			<button type="button" class="btn btn-success" onclick="employ()" id = "emp">Employ</button>
 
-		  	<button type="button" class="btn btn-primary" onclick="display()" id = "disp">display</button>
+
+			<!-- javascript and web3 functions are inside this script. -->
+
+		<script type="text/javascript">
 
 
+		// The Application Binary Interface is the standard way to interact with contracts in the Ethereum ecosystem, both from outside the blockchain 	// and for contract-to-contract interaction. Data is encoded according to its type, as described in this specification.
 
+		// we get the abi by compiling the code on the remix ide. 
+		 
 
-
-		    <script type="text/javascript">
-
-					var abi = [
+			var abi = [
 	{
 		"constant": true,
 		"inputs": [
@@ -853,24 +877,54 @@
 	}
 ];
 
-					var address = '0x8bf6c3e5aa21cc5ed7d095898f0ffe1b06a0ea1b';
-					var webObject;
+				// the address of the smart contract. we use remix to deploy the smart contract on MetaMask on our private network.
+				// We can then get the address of the smart contract on Ganache. 
+				// (we deploy the smart contract in our private network using metamask on port 8545. in ganache, we should go to 
+				// settings and change the port to 8545. )
 
-					window.addEventListener('load', function() {
+				var address = '0x49d2955b20949e344ac61c156e7a6635527c1702';
+				
+				// webObject is used to interact with the solidity code from the front-end (html/js)
 
+				var webObject; // webObject is a global variable so that it can be used in all the functions. the webObject is 
+						 	   // created every time the page loads (inside the onload function).
+
+				
+				// this function gets executed every time the page loads.
+				window.addEventListener('load', function() {
+
+						// we check if metamask has already injected an instance of web3. 
 						if (typeof web3 !== 'undefined') {
+						
 						//Use Mist/MetaMask's provider
-						web3 = new Web3(web3.currentProvider);
+							web3 = new Web3(web3.currentProvider);
+						
 						} else {
+								
+							// if the user hasn't installed metamask, we prompt the user to install it.	
 							alert("Install Metamask");
+							// here, we create our own instance of web3 on our localhost listening to port 8545. 
 							web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-							alert("Using HTTP");
+							
 						}
+						
+						// we set the default account(owner) to the first account (index = 0) on metamask. 
+						// this is the current account used in MetaMask. 
 						web3.eth.defaultAccount = web3.eth.accounts[0];
+						
+						// we link the web3 with the abi of the contract.
 						var mbst = web3.eth.contract(abi);
+						
+						// we set the address of the contract to the webObject so that it can locate the contract. 
 						webObject = mbst.at(address);
+
+						// we call the update_view() function which updates the page with the list of students that are already\
+						// in the database.
 						update_view();
+
 				})
+
+				// global variables.
 
 	        	var name = "";
 	        	var student_address = "";
@@ -883,14 +937,18 @@
 	        	var profeciency = "";
 				var num = 0;
 
+				// function to reload the page everytime a new student is created so that we can display the names of all the 
+				// students in the on load function.
 				$('#contact-form').submit(function () {
  					recieve();
  					return true;
 				});
 
 
+				// function to get the details of the student from the form and send the details to the ethereum backend.
 	        	function recieve(){
 
+	        		// getting the values of the input from the form.
 	        		name = document.getElementById('nam').value;
 	        		student_address = document.getElementById('student_address').value;
 	        		parent = document.getElementById('parent').value;
@@ -901,132 +959,184 @@
 	        		profeciency = document.getElementById('profeciency').value;
 
 
-							try {
+					try {
 
-								webObject.createStudent(    Number(attendance),
-								                            Number(marks),
-															String(student_address),
-								                            String(parent_address),
-								                            String(parent),
-								                            String(name),
-								                            String(course),
-								                            String(profeciency),
-															{ from: web3.eth.defaultAccount, gas: 3000000, value: web3.toWei(0.01)},
-																						
-															function(err, res) {
-																if(!err)
-																	alert("successCreate");
-																else
-																	console.log(err);
-																return false;
-															})
+						// we use the webObject to call the create students function in our smart contract.
+						// we pass the appropriate parameters to the function (the detaials we get from the form).
+						webObject.createStudent(  Number(attendance),
+								                  Number(marks),
+												  String(student_address),
+								                  String(parent_address),
+								                  String(parent),
+								                  String(name),
+								                  String(course),
+								                  String(profeciency),
+												  
+												  { from: web3.eth.defaultAccount, gas: 3000000, value: web3.toWei(0.01)},
+														
+														// callback function.
+														// this function gets the return value of the function in the smart contract(solidity)
+														// the return value is stored in the variable res											
+														// res can only be accessed inside the scope of this function.
+														// it cannot be set to a global variable and accessed outside the function.
+														// this function should be added at the end of every function call from
+														// the webObject. 
+														// it also gets an error stored in err if there is some error.
+														function(err, res) {
+
+															if(!err)
+																alert("student created.");
+															else
+																console.log(err);
+															
+															return false;
+															
+														});
 							
-																			//.send({ from: web3.defaultAccount, value: web3.utils.toWei("0.01")})
-							} catch (e) { alert(e); }
-	        		
-	        		add_student();
-	        	
+																			
+					} catch (e) {
+								 
+						alert(e); 
+					}
+
+
+	  
+	        		add_student();      	
 
 	        	}
 
 
+	        	// this function prompts the user to submit the transaction on metamask
+	        	// if the transaction is not submitted, then the student won't be added
+	        	// so, it is important for the user to first submit the transaction on MetaMask
+	        	// before clicking on ok. 
 			    function add_student() {
 
-			    	alert('Submit on MetaMask!');
+			    	alert('Submit on MetaMask before clicking on OK !! ');
 			    	update_view();
             	}
 
 
-
-
+            	//  
             	function update_view() {
-            		var studentList = [];
-							var parent = document.getElementById('list_items');
-							var listview = document.createElement('ul');
+					
+            		// we are dynamically creating elements and adding them to the view.
 
-            	listview.setAttribute('id', 'view');
-            	parent.appendChild(listview);
+            		// this is the reference of the parent div in html.
+					var parent = document.getElementById('list_items');
+					// this is the unordered list (html tag).
+					var listview = document.createElement('ul');
 
+	            	listview.setAttribute('id', 'view');
+	            	parent.appendChild(listview);
 
-            	webObject.getSize(function(err, res) {
-														if(!err);
-															//alert("successCreate");
-														else
-															console.log(err);
+	            	// calling the getSize function in the smart contract using a callback function.
+	            	// this function returns the size of the student array (in other words, the number
+	            	// of students in the database)
+	            	// the size is stored in the res variable. this cannot be accessed outside this function.
+	            	// therefore, we have added a nested function that calls getStudent inside this getsize function
+	            	webObject.getSize(function(err, res) {
+											
+											if(!err);
+												//alert("successCreate");
+											else
+												console.log(err);
+
+											// a for loop that runs for 'size' times. to iterate over every student
+											// in the database.											
+											for (i=	0; i< res; i++) {
+												
+												try {
+													
+													// we use the webObject to call the getStudent function which returns the
+													// details of the students in the database.
+													webObject.getStudent(i,
+																            
+																            // the callback function that stores the return value
+																            // of the getStudent function(in the smart contract)
+																            // in the variable res1.
+																            // res1 is an array that contains all the details of a
+																            // particular student.
+																            function(err1, res1) {
+																				
+																				if(!err1)
+																					;
+																				else
+																					console.log(err1);
 																					
-														for (i=	0; i< res; i++) {
-															try {
-															        webObject.getStudent(i,
-															            				
-															            				function(err1, res1) {
-																							if(!err1)
-																								;
-																							else
-																								console.log(err1);
-																							//return false;
-																							studentList.push(res1[0]);
-																							var el = document.createElement('li');
-																							el.setAttribute('id', num);
-																							el.innerHTML =  res1[0];	//studentList[i];
+																				// dynamically creating a list item
+																				var el = document.createElement('li');
+																				// giving the id to the list element.
+																				// this id is treated as the index to access
+																				// the particular student in the smart contract array.
+																				el.setAttribute('id', num);
+																				el.innerHTML =  res1[0];	// res[0] contains the name.
 
-																							listview.appendChild(el);
+																				listview.appendChild(el);
 
-																							el.onclick = function() {get_details(this);};
+																				// setting an onlckick listener to the dynamically added
+																				// name of the student.  
+																				el.onclick = function() {
+																								get_details(this); // get_detail is called onclick. 
+																							 };
 
-																							num = num + 1;
+																				num = num + 1; // incrementing the id. 
+																			}
 
-																						});
-															     
-															} catch (e) { console.log(e); }
-															            
+																		);
+																     
+												} catch (e) {
+													 console.log(e); 
 
-												       	}
-													});
+												}
+																            
 
+											}
+
+									}
+					);
+
+            	
             	}
 
-			        
+			    // function to get the details of the student specified by the id.    
 				function get_details(el){
-
-					//alert(el.id);
-					
+						
 					webObject.getStudent(el.id, function(err, res) { // callback function
-													
-													if(!err)
-														;
-													else
-														console.log(err);
-														//return false;
-													
+														
+														if(!err)
+															;
+														else
+															console.log(err);
+															
+														// dynamically displaying the details.
+														// the details are stored in the 'res' array.
+														document.getElementById('name_span').innerHTML = res[0];
+												    	document.getElementById('teach_span').innerHTML = res[1];
+												    	document.getElementById('par_span').innerHTML = res[2];
+												    	document.getElementById('course_span').innerHTML = res[3];
+												    	document.getElementById('mar_span').innerHTML = res[4];
+												    	document.getElementById('att_span').innerHTML = res[5];
+												    	document.getElementById('pro_span').innerHTML = res[7];
 
-													document.getElementById('name_span').innerHTML = res[0];
-											    	document.getElementById('teach_span').innerHTML = res[1];
-											    	document.getElementById('par_span').innerHTML = res[2];
-											    	document.getElementById('course_span').innerHTML = res[3];
-											    	document.getElementById('mar_span').innerHTML = res[4];
-											    	document.getElementById('att_span').innerHTML = res[5];
-											    	document.getElementById('pro_span').innerHTML = res[6];
+												}
+														
 
-													});
-
-
+										);
 
 				}
 
-
-
+				// function to employ the student.
 			   	function employ(){
-			   		
+
 			    	alert('employed');
 			    }
 
 
+		</script>
 
-
-		    </script>
-
-		  </div>
-		</div>
+	</div>
+	</div>
 
 
 
