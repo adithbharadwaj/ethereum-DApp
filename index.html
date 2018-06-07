@@ -115,9 +115,9 @@
 	<button class="btn btn-primary" id="add_std" onclick="location.href = 'edit.html'; ">Edit</button>
 
 
-<!-- a container(wrapper) to display the names of the students that have been added.   
-	 the list of students is dynamically displayed. when you click on the name of a particular 
-	 student, the details of that student are displayed. 
+<!-- a container(wrapper) to display the names of the students that have been added.
+	 the list of students is dynamically displayed. when you click on the name of a particular
+	 student, the details of that student are displayed.
 -->
 
 <div class="container">
@@ -142,7 +142,7 @@
 
 </div>
 
-	
+
 	<!-- A panel to display the details of the student. -->
 
 
@@ -157,7 +157,7 @@
 		 <div class="panel-group">
 
 		 <!-- every span tag has a unique id. when you click on the name of a particular student, the details
-			  are displayed in the span tag.	
+			  are displayed in the span tag.
 		  -->
 
 		    <div class="panel panel-primary">
@@ -175,6 +175,11 @@
 		      <div class="panel-body"><span id="par_span"></span></div>
 		    </div>
 
+				<div class="panel panel-primary">
+		      <div class="panel-heading">Homework count</div>
+		      <div class="panel-body"><span id="hw_span"></span></div>
+		    </div>
+
 		    <div class="panel panel-primary">
 		      <div class="panel-heading">Course</div>
 		      <div class="panel-body"><span id="course_span"></span></div>
@@ -190,6 +195,11 @@
 		      <div class="panel-body"><span id="att_span"></span></div>
 		    </div>
 
+				<div class="panel panel-primary">
+		      <div class="panel-heading">Employer</div>
+		      <div class="panel-body"><span id="emp_span"></span></div>
+		    </div>
+
 		    <div class="panel panel-primary">
 		      <div class="panel-heading">Proficiency</div>
 		      <div class="panel-body"><span id="pro_span"></span></div>
@@ -201,6 +211,14 @@
 
 			<button type="button" class="btn btn-success" onclick="employ()" id = "emp">Employ</button>
 
+			<!-- HOMEWORK button. the teacher can click on this button to assign homework to a student. -->
+
+			<button type="button" class="btn btn-success" onclick="givehw()" id = "emp">Give HW</button>
+
+			<!-- FINISH HW button. the student can click on this button to finish all homework. -->
+
+			<button type="button" class="btn btn-success" onclick="finish_hw()" id = "emp">Finish HW</button>
+
 
 			<!-- javascript and web3 functions are inside this script. -->
 
@@ -209,56 +227,56 @@
 
 		// The Application Binary Interface is the standard way to interact with contracts in the Ethereum ecosystem, both from outside the blockchain 	// and for contract-to-contract interaction. Data is encoded according to its type, as described in this specification.
 
-		// we get the abi by compiling the code on the remix ide. 
-		 
+		// we get the abi by compiling the code on the remix ide.
 
-			
+
+
 
 				// the address of the smart contract. we use remix to deploy the smart contract on MetaMask on our private network.
-				// We can then get the address of the smart contract on Ganache. 
-				// (we deploy the smart contract in our private network using metamask on port 8545. in ganache, we should go to 
+				// We can then get the address of the smart contract on Ganache.
+				// (we deploy the smart contract in our private network using metamask on port 8545. in ganache, we should go to
 				// settings and change the port to 8545. )
 
 				//var address = '0x49d2955b20949e344ac61c156e7a6635527c1702';
-				
+
 				// webObject is used to interact with the solidity code from the front-end (html/js)
 
-				var webObject; // webObject is a global variable so that it can be used in all the functions. the webObject is 
+				var webObject; // webObject is a global variable so that it can be used in all the functions. the webObject is
 						 	   // created every time the page loads (inside the onload function).
 
-				
+
 				// this function gets executed every time the page loads.
 				window.addEventListener('load', function() {
 
-						// we check if metamask has already injected an instance of web3. 
+						// we check if metamask has already injected an instance of web3.
 						if (typeof web3 !== 'undefined') {
-						
+
 						//Use Mist/MetaMask's provider
 							web3 = new Web3(web3.currentProvider);
-						
+
 						} else {
-								
-							// if the user hasn't installed metamask, we prompt the user to install it.	
+
+							// if the user hasn't installed metamask, we prompt the user to install it.
 							alert("Install Metamask");
-							// here, we create our own instance of web3 on our localhost listening to port 8545. 
+							// here, we create our own instance of web3 on our localhost listening to port 8545.
 							web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-							
+
 						}
-						
-						// we set the default account(owner) to the first account (index = 0) on metamask. 
-						// this is the current account used in MetaMask. 
+
+						// we set the default account(owner) to the first account (index = 0) on metamask.
+						// this is the current account used in MetaMask.
 						web3.eth.defaultAccount = web3.eth.accounts[0];
-						
+
 						// we link the web3 with the abi of the contract.
 						var mbst = web3.eth.contract(abi);
-						
-						// we set the address of the contract to the webObject so that it can locate the contract. 
+
+						// we set the address of the contract to the webObject so that it can locate the contract.
 						try{
 							webObject = mbst.at(address);
 						}
 						catch(e){
 							console.log(e);
-						}	
+						}
 
 						// we call the update_view() function which updates the page with the list of students that are already\
 						// in the database.
@@ -277,9 +295,13 @@
 	        	var marks = "";
 	        	var attendance = "";
 	        	var profeciency = "";
-				var num = 0;
+						var num = 0;
 
-				// function to reload the page everytime a new student is created so that we can display the names of all the 
+						var currentStudentPeeps;
+						var currentStudentParams;
+						var currentStudentIndex=-1;
+
+				// function to reload the page everytime a new student is created so that we can display the names of all the
 				// students in the on load function.
 				$('#contact-form').submit(function () {
  					recieve();
@@ -313,16 +335,16 @@
 								                  String(name),
 								                  String(course),
 								                  String(profeciency),
-												  
+
 												  { from: web3.eth.defaultAccount, gas: 3000000, value: web3.toWei(0.01)},
-														
+
 														// callback function.
 														// this function gets the return value of the function in the smart contract(solidity)
-														// the return value is stored in the variable res											
+														// the return value is stored in the variable res
 														// res can only be accessed inside the scope of this function.
 														// it cannot be set to a global variable and accessed outside the function.
 														// this function should be added at the end of every function call from
-														// the webObject. 
+														// the webObject.
 														// it also gets an error stored in err if there is some error.
 														function(err, res) {
 
@@ -330,20 +352,20 @@
 																alert("student created.");
 															else
 																console.log(err);
-															
+
 															return false;
-															
+
 														});
-							
-																			
+
+
 					} catch (e) {
-								 
-						alert(e); 
+
+						alert(e);
 					}
 
 
-	  
-	        		add_student();      	
+
+	        		add_student();
 
 	        	}
 
@@ -351,7 +373,7 @@
 	        	// this function prompts the user to submit the transaction on metamask
 	        	// if the transaction is not submitted, then the student won't be added
 	        	// so, it is important for the user to first submit the transaction on MetaMask
-	        	// before clicking on ok. 
+	        	// before clicking on ok.
 			    function add_student() {
 
 			    	alert('Submit on MetaMask before clicking on OK !! ');
@@ -359,9 +381,9 @@
             	}
 
 
-            	//  
+            	//
             	function update_view() {
-					
+
             		// we are dynamically creating elements and adding them to the view.
 
             		// this is the reference of the parent div in html.
@@ -378,34 +400,34 @@
 	            	// the size is stored in the res variable. this cannot be accessed outside this function.
 	            	// therefore, we have added a nested function that calls getStudent inside this getsize function
 	            	webObject.getSize(function(err, res) {
-											
+
 											if(!err);
 												//alert("successCreate");
 											else
 												console.log(err);
 
 											// a for loop that runs for 'size' times. to iterate over every student
-											// in the database.											
+											// in the database.
 											for (i=	0; i< res; i++) {
-												
+
 												try {
-													
+
 													// we use the webObject to call the getStudent function which returns the
 													// details of the students in the database.
-													webObject.getStudent(i,
-																            
+													webObject.getStudentPeeps(i,
+
 																            // the callback function that stores the return value
 																            // of the getStudent function(in the smart contract)
 																            // in the variable res1.
 																            // res1 is an array that contains all the details of a
 																            // particular student.
 																            function(err1, res1) {
-																				
+
 																				if(!err1)
 																					;
 																				else
 																					console.log(err1);
-																					
+
 																				// dynamically creating a list item
 																				var el = document.createElement('li');
 																				// giving the id to the list element.
@@ -417,62 +439,123 @@
 																				listview.appendChild(el);
 
 																				// setting an onlckick listener to the dynamically added
-																				// name of the student.  
+																				// name of the student.
 																				el.onclick = function() {
-																								get_details(this); // get_detail is called onclick. 
+																								get_details(this); // get_detail is called onclick.
 																							 };
 
-																				num = num + 1; // incrementing the id. 
+																				num = num + 1; // incrementing the id.
 																			}
 
 																		);
-																     
+
 												} catch (e) {
-													 console.log(e); 
+													 console.log(e);
 
 												}
-																            
+
 
 											}
 
 									}
 					);
 
-            	
+
             	}
 
-			    // function to get the details of the student specified by the id.    
+			    // function to get the details of the student specified by the id.
 				function get_details(el){
-						
-					webObject.getStudent(el.id, function(err, res) { // callback function
-														
+					currentStudentIndex=el.id;
+					webObject.getStudentPeeps(el.id, function(err, res) { // callback function
 														if(!err)
-															;
+															setStudentPeeps(res);
 														else
 															console.log(err);
-															
-														// dynamically displaying the details.
-														// the details are stored in the 'res' array.
-														document.getElementById('name_span').innerHTML = res[0];
-												    	document.getElementById('teach_span').innerHTML = res[1];
-												    	document.getElementById('par_span').innerHTML = res[2];
-												    	document.getElementById('course_span').innerHTML = res[3];
-												    	document.getElementById('mar_span').innerHTML = res[4];
-												    	document.getElementById('att_span').innerHTML = res[5];
-												    	document.getElementById('pro_span').innerHTML = res[7];
+												});
+					webObject.getStudentParams(el.id, function(err, res) { // callback function
+														if(!err)
+															setStudentParams(res);
+														else
+															console.log(err);
+														});
+					update_details_view();
+				}
 
-												}
-														
+				function setStudentPeeps(result) {
+					currentStudentPeeps=result;
+				}
+				function setStudentParams(result) {
+					currentStudentParams=result;
+				}
 
-										);
+				function update_details_view() {
+
+					// dynamically displaying the details.
+					// the details are stored in the 'res' array.
+					document.getElementById('name_span').innerHTML = currentStudentPeeps[0];
+					document.getElementById('teach_span').innerHTML = currentStudentPeeps[2];
+					document.getElementById('par_span').innerHTML = currentStudentPeeps[4];
+					document.getElementById('hw_span').innerHTML = currentStudentParams[0];
+					document.getElementById('course_span').innerHTML = currentStudentParams[1];
+					document.getElementById('mar_span').innerHTML = currentStudentParams[2];
+					document.getElementById('att_span').innerHTML = currentStudentParams[3];
+					document.getElementById('emp_span').innerHTML = currentStudentParams[4];
+					document.getElementById('pro_span').innerHTML = currentStudentParams[5];
 
 				}
 
 				// function to employ the student.
 			   	function employ(){
-
-			    	alert('employed');
+						if(currentStudentIndex===-1)
+							alert("Select student first!");
+							else {
+								webObject.employStudent(currentStudentIndex,
+																				{ from: web3.eth.defaultAccount, gas: 3000000, value: web3.toWei(0.01)},
+																				function(err, res) {
+																					if(!err)
+																						alert("Student Employment requested");
+																					else {
+																						console.log(err);
+																						alert("Not an employer");
+																					}
+																				})
+							}
 			    }
+
+					// function to assign homework to the student.
+						function givehw(){
+							if(currentStudentIndex===-1)
+								alert("Select student first!");
+								else {
+									webObject.newHW(currentStudentIndex,
+																	function(err, res) {
+																			if(!err)
+																				alert("Homework assigned");
+																			else {
+																				console.log(err);
+																				alert("Not the Student's teacher");
+																			}
+																	})
+								}
+						}
+
+						// function to finish homework.
+							function finish_hw(){
+								if(currentStudentIndex===-1)
+									alert("Select student first!");
+									else {
+										webObject.finishHW(currentStudentIndex,
+																		{from: web3.eth.defaultAccount, gas: 3000000},
+																		function(err, res) {
+																				if(!err)
+																					alert("Homework Done");
+																				else {
+																					console.log(err);
+																					alert("Not the right student");
+																				}
+																		})
+									}
+							}
 
 
 		</script>

@@ -49,10 +49,10 @@
         </div>
     </div>
     <script type="text/javascript">
-    	
+
     	var webObject;
     	window.addEventListener('load', function() {
-    	
+
 
 						if (typeof web3 !== 'undefined') {
 						//Use Mist/MetaMask's provider
@@ -66,9 +66,9 @@
 						web3.eth.defaultAccount = web3.eth.accounts[0];
 						var mbst = web3.eth.contract(abi);
 						webObject = mbst.at(address);
-						
+
 						});
-			
+
 
     	var teacherName = "";
     	var teacherAddress = "";
@@ -94,16 +94,16 @@
 					}
 					else
 						alert(err);
-					
+
 				})
-							
+
 																		//.send({ from: web3.defaultAccount, value: web3.utils.toWei("0.01")})
 			} catch (e) { alert(e); }
 
-			
-		}
-    	
 
-    	
+		}
+
+
+
     </script>
 </body>

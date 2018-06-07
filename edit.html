@@ -168,12 +168,13 @@
 																		{ from: web3.eth.defaultAccount, gas: 3000000, value: web3.toWei(0.01) },
 																		function(err, res) {
 																			if(!err)
-																				alert("successChange");
-																			else
+																				alert("Details changed successfully");
+																			else {
+																				alert("Not the Student's teacher");
 																				console.log(err);
-																			return false;
-																		});
-					}
+																			}
+																		})
+			}
 		}
 	}
 

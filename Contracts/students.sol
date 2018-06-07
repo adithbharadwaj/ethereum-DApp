@@ -3,12 +3,13 @@ pragma solidity ^0.4.0;
 contract Students {
 
     //Ownable inda
-    address public owner;   
+    address public owner;
 
     event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
 
     constructor() public {
         owner = msg.sender;
+        peepNames[msg.sender]="Owner";
     }
 
     modifier onlyOwner() {
@@ -68,7 +69,7 @@ contract Students {
     modifier ifTeacher(address addr) {
          require(permission[addr]==3);
          _;
-     }
+    }
 
     modifier ifEmp(address addr) {
         require(permission[addr]==2);
@@ -93,7 +94,7 @@ contract Students {
                             string _parentName,
                             string _studentName,
                             string _course,
-                            string _prof) public payable /*ifTeacher(msg.sender)*/ {
+                            string _prof) public payable ifTeacher(msg.sender) {
 
         require(msg.value>=fee);
         msg.sender.transfer(msg.value-fee);
@@ -126,35 +127,39 @@ contract Students {
     }
 
     // Only the student's teacher can edit info and give homework
-    function updateMarks(uint studentId, uint newMarks) public payable onlyTeacher(studentId) {
+    function updateDetails(uint studentId, string newCourse, uint newMarks,
+                    uint newAttendance, string newProf) public payable onlyTeacher(studentId) {
+
         require(msg.value>=fee);
         msg.sender.transfer(msg.value-fee);
+        student memory s = students[studentId];
+        if(keccak256(bytes(newCourse))!=keccak256(bytes(s.course)))
+            updateCourse(studentId, newCourse);
+        if(newMarks!=s.marks)
+            updateMarks(studentId, newMarks);
+        if( newAttendance!=s.attendance)
+            updateAttendance(studentId, newAttendance);
+        if( keccak256(bytes(newProf))!=keccak256(bytes(s.proficiency)))
+            updateProficiency(studentId, newProf);
+    }
 
+    function updateMarks(uint studentId, uint newMarks) private {
         student memory s = students[studentId];
         emit MarksUpdated(s.name, studentId, s.marks, newMarks);
         s.marks = newMarks;
     }
 
-    function updateAttendance(uint studentId, uint newAttendance) public payable onlyTeacher(studentId) {
-        require(msg.value>=fee);
-        msg.sender.transfer(msg.value-fee);
-
+    function updateAttendance(uint studentId, uint newAttendance) private {
         emit AttendanceUpdated(students[studentId].name, studentId, students[studentId].attendance, newAttendance);
         students[studentId].attendance = newAttendance;
     }
 
-    function updateCourse(uint studentId, string newCourse) public payable onlyTeacher(studentId) {
-        require(msg.value>=fee);
-        msg.sender.transfer(msg.value-fee);
-
+    function updateCourse(uint studentId, string newCourse) private {
         emit CourseUpdated(students[studentId].name, studentId, students[studentId].course, newCourse);
         students[studentId].course = newCourse;
     }
 
-    function updateProficiency(uint studentId, string newProficiency) public payable onlyTeacher(studentId) {
-        require(msg.value>=fee);
-        msg.sender.transfer(msg.value-fee);
-
+    function updateProficiency(uint studentId, string newProficiency) private {
         emit ProfUpdated(students[studentId].name, studentId, students[studentId].proficiency, newProficiency);
         students[studentId].proficiency = newProficiency;
     }
@@ -165,10 +170,26 @@ contract Students {
     }
 
     // Anyone can view student details
-    function getStudent(uint studentId) public view
-    returns(string name,
-            address teacher,
-            address parent,
+    function getStudentPeeps(uint studentId) public view
+    returns(string student_name,
+            address student_address,
+            string teacher_name,
+            address teacher_address,
+            string parent_name,
+            address parent_address
+            ) {
+
+        student memory s = students[studentId];
+        return (s.name,
+                s.studentAddr,
+                peepNames[s.teacher],
+                s.teacher,
+                peepNames[s.parent],
+                s.parent);
+    }
+
+    function getStudentParams(uint studentId) public view
+    returns(uint HWcount,
             string course,
             uint marks,
             uint attendance,
@@ -176,9 +197,7 @@ contract Students {
             string proficiency) {
 
         student memory s = students[studentId];
-        return (s.name,
-                s.teacher,
-                s.parent,
+        return (s.HWcount,
                 s.course,
                 s.marks,
                 s.attendance,
@@ -219,13 +238,8 @@ contract Students {
     function withdraw() public onlyOwner {
         owner.transfer(address(this).balance);
     }
-    
-    function getStudentName(uint studentId) public view returns(string) {
-        return students[studentId].name;
-    }
-    
+
     function getSize() public view returns(uint){
         return students.length;
     }
-
 }
