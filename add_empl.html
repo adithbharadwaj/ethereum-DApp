@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Add Employer</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<body style="background: #ddd;">
+
+	<h1 style="text-align: center;">Details Form</h1>
+
+	<p style="padding-bottom: 50px;"></p>
+
+	<form id="contact-form" method="post" role="form">
+
+    <div class="messages"></div>
+
+    <div class="col-lg-12" >
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_name">Employer Name *</label>
+                    <input id="nam" type="text" name="nam" class="form-control" placeholder="Please enter your name *" required="required" data-error="Firstname is required.">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="form_name">Employer Address *</label>
+                    <input id="address" type="text" name="address" class="form-control" required="required" data-error="Address is required.">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+        </div>
+		<p style="padding-top: 20px;"></p>
+
+        <div class="row">
+            <div class="col-md-12">
+                <input type="submit" class="btn btn-success" id="submit" >
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    	var abi=[
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "students",
+		"outputs": [
+			{
+				"name": "attendance",
+				"type": "uint256"
+			},
+			{
+				"name": "marks",
+				"type": "uint256"
+			},
+			{
+				"name": "HWcount",
+				"type": "uint256"
+			},
+			{
+				"name": "studentAddr",
+				"type": "address"
+			},
+			{
+				"name": "teacher",
+				"type": "address"
+			},
+			{
+				"name": "parent",
+				"type": "address"
+			},
+			{
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"name": "course",
+				"type": "string"
+			},
+			{
+				"name": "employer",
+				"type": "string"
+			},
+			{
+				"name": "proficiency",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [],
+		"name": "withdraw",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "studentId",
+				"type": "uint256"
+			},
+			{
+				"name": "newAttendance",
+				"type": "uint256"
+			}
+		],
+		"name": "updateAttendance",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "studentId",
+				"type": "uint256"
+			}
+		],
+		"name": "employStudent",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "studentId",
+				"type": "uint256"
+			},
+			{
+				"name": "newMarks",
+				"type": "uint256"
+			}
+		],
+		"name": "updateMarks",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "studentId",
+				"type": "uint256"
+			}
+		],
+		"name": "getStudent",
+		"outputs": [
+			{
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"name": "teacher",
+				"type": "address"
+			},
+			{
+				"name": "parent",
+				"type": "address"
+			},
+			{
+				"name": "course",
+				"type": "string"
+			},
+			{
+				"name": "marks",
+				"type": "uint256"
+			},
+			{
+				"name": "attendance",
+				"type": "uint256"
+			},
+			{
+				"name": "employer",
+				"type": "string"
+			},
+			{
+				"name": "proficiency",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "studentId",
+				"type": "uint256"
+			},
+			{
+				"name": "newProficiency",
+				"type": "string"
+			}
+		],
+		"name": "updateProficiency",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "newEmpName",
+				"type": "string"
+			},
+			{
+				"name": "newEmpAddress",
+				"type": "address"
+			}
+		],
+		"name": "createEmp",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "studentId",
+				"type": "uint256"
+			}
+		],
+		"name": "getStudentName",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "studentId",
+				"type": "uint256"
+			}
+		],
+		"name": "maybeSomething",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "studentId",
+				"type": "uint256"
+			}
+		],
+		"name": "finishHW",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "studentId",
+				"type": "uint256"
+			},
+			{
+				"name": "newCourse",
+				"type": "string"
+			}
+		],
+		"name": "updateCourse",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getSize",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "newTeacherName",
+				"type": "string"
+			},
+			{
+				"name": "newTeacherAddress",
+				"type": "address"
+			}
+		],
+		"name": "createTeacher",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "transferOwnership",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_attendance",
+				"type": "uint256"
+			},
+			{
+				"name": "_marks",
+				"type": "uint256"
+			},
+			{
+				"name": "_studentAddress",
+				"type": "address"
+			},
+			{
+				"name": "_parentAddress",
+				"type": "address"
+			},
+			{
+				"name": "_parentName",
+				"type": "string"
+			},
+			{
+				"name": "_studentName",
+				"type": "string"
+			},
+			{
+				"name": "_course",
+				"type": "string"
+			},
+			{
+				"name": "_prof",
+				"type": "string"
+			}
+		],
+		"name": "createStudent",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "studentId",
+				"type": "uint256"
+			}
+		],
+		"name": "newHW",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "previousOwner",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "OwnershipTransferred",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "studentName",
+				"type": "string"
+			},
+			{
+				"indexed": true,
+				"name": "studentId",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"name": "studentAddress",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "teacherName",
+				"type": "string"
+			}
+		],
+		"name": "NewStudent",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "empName",
+				"type": "string"
+			},
+			{
+				"indexed": true,
+				"name": "empAddress",
+				"type": "address"
+			}
+		],
+		"name": "NewEmp",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "teacherName",
+				"type": "string"
+			},
+			{
+				"indexed": true,
+				"name": "teacherAddress",
+				"type": "address"
+			}
+		],
+		"name": "NewTeacher",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "studentName",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "studentId",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"name": "from",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"name": "to",
+				"type": "uint256"
+			}
+		],
+		"name": "MarksUpdated",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "studentName",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "studentId",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"name": "from",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"name": "to",
+				"type": "uint256"
+			}
+		],
+		"name": "AttendanceUpdated",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "studentName",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "studentId",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"name": "from",
+				"type": "string"
+			},
+			{
+				"indexed": true,
+				"name": "to",
+				"type": "string"
+			}
+		],
+		"name": "CourseUpdated",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "studentName",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "studentId",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"name": "from",
+				"type": "string"
+			},
+			{
+				"indexed": true,
+				"name": "to",
+				"type": "string"
+			}
+		],
+		"name": "ProfUpdated",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "studentName",
+				"type": "string"
+			},
+			{
+				"indexed": true,
+				"name": "studentId",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "presentHWCount",
+				"type": "uint256"
+			}
+		],
+		"name": "NewHW",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "studentName",
+				"type": "string"
+			},
+			{
+				"indexed": true,
+				"name": "studentId",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"name": "studentAddress",
+				"type": "address"
+			}
+		],
+		"name": "HWDone",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "studentName",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "studentId",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"name": "empName",
+				"type": "string"
+			},
+			{
+				"indexed": true,
+				"name": "empAddress",
+				"type": "address"
+			}
+		],
+		"name": "StudentEmployed",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"name": "studentName",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "studentId",
+				"type": "uint256"
+			},
+			{
+				"indexed": true,
+				"name": "parentName",
+				"type": "string"
+			},
+			{
+				"indexed": true,
+				"name": "parentAddress",
+				"type": "address"
+			}
+		],
+		"name": "YesParent",
+		"type": "event"
+	}
+];
+    	var address="0x6a72f1753fb01402d3736f2bff6e36f82ac93965";
+    	var webObject;
+    	window.addEventListener('load', function() {
+    	
+
+						if (typeof web3 !== 'undefined') {
+						//Use Mist/MetaMask's provider
+
+						web3 = new Web3(web3.currentProvider);
+						} else {
+							alert("Install Metamask");
+							web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+							alert("Using HTTP");
+						}
+						web3.eth.defaultAccount = web3.eth.accounts[0];
+						var mbst = web3.eth.contract(abi);
+						webObject = mbst.at(address);
+						
+						});
+			
+
+    	var Name = "";
+    	var Address = "";
+    	$('#contact-form').submit(function () {
+ 					recieve();
+ 					return false; 
+				}); 
+
+    	function recieve(){
+
+    		Name = document.getElementById('nam').value;
+
+    		Address = document.getElementById('address').value;
+
+			try {
+
+					webObject.createEmp(String(Name),
+					String(Address),
+					{ from: web3.eth.defaultAccount, gas: 3000000, value: web3.toWei(0.01)},
+					function(err, res) {
+					if(!err){
+						alert("Employer created");
+					}
+					else
+						alert(err);
+					
+				})
+							
+																		//.send({ from: web3.defaultAccount, value: web3.utils.toWei("0.01")})
+			} catch (e) { alert(e); }
+
+			
+		}
+    	
+
+    	
+    </script>
+</body>
